@@ -1,5 +1,4 @@
 #include "Engine.h"
-#include "SpaceGame/Assets.h"
 #include <memory>
 
 using namespace sr;
@@ -31,14 +30,11 @@ int main()
         float dt = Engine::Get().GetTime().GetDeltaTime();
             
         //RENDER
-            Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
-            Engine::Get().GetRenderer().Clear();
-
-            Engine::Get().GetRenderer().SetColor(1.0f, 1.0f, 1.0f);
+        Engine::Get().GetRenderer().BeginFrame();
             
             Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
 
-            Engine::Get().GetRenderer().Present();
+            Engine::Get().GetRenderer().EndFrame();
         }
         //SHUTDOWN
     Engine::Get().Shutdown();

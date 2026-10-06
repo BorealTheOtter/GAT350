@@ -173,49 +173,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SpaceGame\Assets.cpp" />
-    <ClCompile Include="SpaceGame\Bullet.cpp" />
-    <ClCompile Include="SpaceGame\Enemy.cpp" />
-    <ClCompile Include="SpaceGame\Player.cpp" />
-    <ClCompile Include="SpaceGame\SpaceGame.cpp" />
-    <ClCompile Include="SpriteGame\CharacterBase.cpp" />
-    <ClCompile Include="SpriteGame\Damager.cpp" />
-    <ClCompile Include="SpriteGame\EnemyController.cpp" />
-    <ClCompile Include="SpriteGame\FlyingEnemyController.cpp" />
-    <ClCompile Include="SpriteGame\PlayerController.cpp" />
-    <ClCompile Include="SpriteGame\SpriteGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{b77e3cfd-2100-4e60-8f6c-453eb9b10cdc}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Build\Assets\SpaceGame\Animations\bomb_explode.json" />
-    <None Include="..\..\Build\Assets\SpaceGame\Animations\coin_idle.json" />
-    <None Include="..\..\Build\Assets\SpaceGame\Data\stupid.json" />
-    <None Include="..\..\Build\Assets\SpaceGame\Tilemaps\world.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_attack.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_attack2.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_death.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_hurt.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_idle.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_run.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Data\level.json" />
-    <None Include="..\..\Build\Assets\SpriteGame\Data\scene.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SpaceGame\Assets.h" />
-    <ClInclude Include="SpaceGame\Bullet.h" />
-    <ClInclude Include="SpaceGame\Enemy.h" />
-    <ClInclude Include="SpaceGame\Player.h" />
-    <ClInclude Include="SpaceGame\SpaceGame.h" />
-    <ClInclude Include="SpriteGame\CharacterBase.h" />
-    <ClInclude Include="SpriteGame\Damager.h" />
-    <ClInclude Include="SpriteGame\EnemyController.h" />
-    <ClInclude Include="SpriteGame\FlyingEnemyController.h" />
-    <ClInclude Include="SpriteGame\PlayerController.h" />
-    <ClInclude Include="SpriteGame\SpriteGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
