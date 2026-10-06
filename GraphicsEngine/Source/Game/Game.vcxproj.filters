@@ -8,9 +8,6 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{af5219e3-9e5a-4595-befb-2fbcfb2e715f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sprite Game">
-      <UniqueIdentifier>{093f8164-f69b-4e42-bfba-dba0223573e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\SpaceGame">
       <UniqueIdentifier>{09612e47-2134-454e-8ef9-f18bfb208de2}</UniqueIdentifier>
     </Filter>
@@ -35,6 +32,9 @@
     <Filter Include="Source\Space Game">
       <UniqueIdentifier>{aed7f8b7-1314-4cd3-819f-7cc6f35b0418}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Sprite Game">
+      <UniqueIdentifier>{093f8164-f69b-4e42-bfba-dba0223573e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -56,22 +56,22 @@
       <Filter>Source\Space Game</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGame\SpriteGame.cpp">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGame\PlayerController.cpp">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGame\EnemyController.cpp">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGame\FlyingEnemyController.cpp">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGame\CharacterBase.cpp">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGame\Damager.cpp">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,22 +129,22 @@
       <Filter>Source\Space Game</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\SpriteGame.h">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\PlayerController.h">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\EnemyController.h">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\FlyingEnemyController.h">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\CharacterBase.h">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\Damager.h">
-      <Filter>Sprite Game</Filter>
+      <Filter>Source\Sprite Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
