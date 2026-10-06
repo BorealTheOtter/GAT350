@@ -1,0 +1,225 @@
+{
+  "actors": [
+    {
+      "name": "Proto_Player",
+      "type": "PlayerController",
+      "tag": "Player",
+      "prototype": true,
+      "lifespan": -1.0,
+      "transform": {
+        "pos": [ 100, 100 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "damping": 1.0,
+      "speed": 400.0,
+      "active": true,
+      "health":  40.0,
+      "components": [
+        {
+          "type": "SpriteAnimatorComponent",
+          "default_animation": "idle",
+          "origin": [ 0.5, 0.2 ],
+          "animations": [
+            {
+              "name": "idle",
+              "tex_frames": "Animations/werewolf/werewolf_idle.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "attack",
+              "tex_frames": "Animations/werewolf/werewolf_attack.json",
+              "fps": 15.0,
+              "loop": false
+            },
+            {
+              "name": "attack2",
+              "tex_frames": "Animations/werewolf/werewolf_attack2.json",
+              "fps": 15.0,
+              "loop": false
+            },
+            {
+              "name": "run",
+              "tex_frames": "Animations/werewolf/werewolf_run.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "hurt",
+              "tex_frames": "Animations/werewolf/werewolf_hurt.json",
+              "fps": 15.0,
+              "loop": false
+            },
+            {
+              "name": "death",
+              "tex_frames": "Animations/werewolf/werewolf_death.json",
+              "fps": 15.0,
+              "loop": false
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 1.1,
+          "shape": "capsule",
+          "angular_damping": 7.0,
+          "size": [ 100, 80 ],
+          "gravity_scale": 1.0,
+          "restitution": 0.0,
+          "friction": 1.0,
+          "constrain_angle": true
+        }
+      ]
+    },
+    {
+      "name": "Proto_Enemy",
+      "type": "EnemyController",
+      "tag": "Enemy",
+      "prototype": true,
+      "lifespan": -1.0,
+      "health":  10.0,
+      "transform": {
+        "pos": [ 100, 100 ],
+        "rot": 0.0,
+        "scale": 2.0
+      },
+      "damping": 1.0,
+      "speed": 400.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteAnimatorComponent",
+          "default_animation": "idle",
+          "origin": [ 0.5, 0.5 ],
+          "animations": [
+            {
+              "name": "idle",
+              "tex_frames": "Animations/enemy/enemy_idle.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "attack",
+              "tex_frames": "Animations/enemy/enemy_attack.json",
+              "fps": 15.0,
+              "loop": false
+            },
+            {
+              "name": "run",
+              "tex_frames": "Animations/enemy/enemy_run.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "hit",
+              "tex_frames": "Animations/enemy/enemy_hit.json",
+              "fps": 15.0,
+              "loop": false
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 1.1,
+          "shape": "capsule",
+          "angular_damping": 7.0,
+          "size": [ 50, 75 ],
+          "gravity_scale": 1.0,
+          "restitution": 0.0,
+          "friction": 1.0,
+          "constrain_angle": true
+        }
+      ]
+    },
+    {
+      "name": "Proto_FlyingEnemy",
+      "type": "FlyingEnemyController",
+      "tag": "Enemy",
+      "prototype": true,
+      "lifespan": -1.0,
+      "health":  10.0,
+      "transform": {
+        "pos": [ 100, 100 ],
+        "rot": 0.0,
+        "scale": 2.0
+      },
+      "damping": 1.0,
+      "speed": 400.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteAnimatorComponent",
+          "default_animation": "idle",
+          "origin": [ 0.5, 0.5 ],
+          "animations": [
+            {
+              "name": "idle",
+              "tex_frames": "Animations/eye/eye_idle.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "attack",
+              "tex_frames": "Animations/eye/eye_attack.json",
+              "fps": 15.0,
+              "loop": false
+            },
+            {
+              "name": "hit",
+              "tex_frames": "Animations/eye/eye_hit.json",
+              "fps": 15.0,
+              "loop": false
+            }
+          ]
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 1.1,
+          "shape": "circle",
+          "angular_damping": 7.0,
+          "size": [ 50, 50 ],
+          "gravity_scale": 0.0,
+          "restitution": 0.0,
+          "constrain_angle": true,
+          "is_sensor": true
+        }
+      ]
+    },
+    {
+      "name": "Proto_Damager",
+      "type": "Damager",
+      "tag": "Damager",
+      "prototype": true,
+      "lifespan": 0.2,
+      "transform": {
+        "pos": [ 100, 100 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "damping": 1.0,
+      "speed": 0.0,
+      "damage": 5.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "origin": [ 0.5, 0.5 ],
+          "texture": "Images/damager.png",
+          "active": false
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 1.1,
+          "shape": "circle",
+          "angular_damping": 7.0,
+          "size": [ 70, 70 ],
+          "gravity_scale": 0.0,
+          "restitution": 0.0,
+          "constrain_angle": true,
+          "is_sensor": true
+        }
+      ]
+    }
+  ]
+}

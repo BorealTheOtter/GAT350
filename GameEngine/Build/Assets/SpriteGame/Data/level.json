@@ -1,0 +1,78 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "prototype": false,
+      "name": "Tilemap",
+      "tag": "Ground",
+      "active": true,
+      "lifespan": -1.0,
+      "persistent": false,
+      "damping": 0.0,
+      "transform": {
+        "pos": [ 0, 0 ],
+        "rot": 0.0,
+        "scale": 5.0
+      },
+      "components": [
+        {
+          "type": "TilemapComponent",
+          "tilemap_name": "Tilemaps/dungeon.json"
+        }
+      ]
+    },
+    {
+      "name": "Proto_Crate",
+      "type": "Actor",
+      "prototype": true,
+      "tag": "Crate",
+      "lifespan": -1.0,
+      "transform": {
+        "pos": [ 350, 500 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "damping": 1.0,
+      "speed": 800.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "Images/crate03.png"
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "size": [ 106, 106 ],
+          "gravity_scale": 1.0,
+          "is_sensor": false
+        }
+      ]
+    },
+    {
+      "name": "Crate :O",
+      "type": "Proto_Crate",
+      "prototype": false,
+      "tag": "Crate",
+      "lifespan": -1.0,
+      "transform": {
+        "pos": [ 350, 800 ],
+        "rot": 0.0,
+        "scale": 1.0
+      }
+    },
+    {
+      "name": "Crate :D",
+      "type": "Proto_Crate",
+      "prototype": false,
+      "tag": "Crate",
+      "lifespan": -1.0,
+      "transform": {
+        "pos": [ 650, 600 ],
+        "rot": 0.0,
+        "scale": 1.0
+      }
+    }
+  ]
+}

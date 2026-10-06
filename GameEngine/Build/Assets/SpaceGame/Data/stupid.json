@@ -1,0 +1,169 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "prototype": false,
+      "name": "Werewolf",
+      "tag": "Player",
+      "active": true,
+      "lifespan": -1.0,
+      "persistent": true,
+      "damping": 0.0,
+      "transform": {
+        "pos": [ 300, 300 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteAnimatorComponent",
+          "default_animation": "idle",
+          "animations": [
+            {
+              "name": "idle",
+              "tex_frames": "Animations/werewolf/werewolf_idle.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "attack",
+              "tex_frames": "Animations/werewolf/werewolf_attack.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "attack2",
+              "tex_frames": "Animations/werewolf/werewolf_attack2.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "run",
+              "tex_frames": "Animations/werewolf/werewolf_run.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "hurt",
+              "tex_frames": "Animations/werewolf/werewolf_hurt.json",
+              "fps": 15.0,
+              "loop": true
+            },
+            {
+              "name": "death",
+              "tex_frames": "Animations/werewolf/werewolf_death.json",
+              "fps": 15.0,
+              "loop": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "prototype": false,
+      "name": "Tilemap",
+      "tag": "Ground",
+      "active": true,
+      "lifespan": -1.0,
+      "persistent": true,
+      "damping": 0.0,
+      "transform": {
+        "pos": [ 0, 0 ],
+        "rot": 0.0,
+        "scale": 3.0
+      },
+      "components": [
+        {
+          "type": "TilemapComponent",
+          "tilemap_name": "Tilemaps/world.json"
+        }
+      ]
+    },
+    {
+      "name": "Proto_Player",
+      "type": "Player",
+      "tag": "Player",
+      "prototype": true,
+      "lifespan": -1.0,
+      "transform": {
+        "pos": [ 100, 100 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "damping": 1.0,
+      "speed": 400.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "Images/player.png"
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 1.1,
+          "angular_damping": 7.0,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Proto_Enemy",
+      "type": "Enemy",
+      "prototype": true,
+      "tag": "EnemyShip",
+      "lifespan": -1.0,
+      "transform": {
+        "pos": [ 500, 500 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "damping": 1.1,
+      "speed": 300.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "Images/enemy.png"
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 1.1,
+          "angular_damping": 7.0,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Proto_Bullet",
+      "type": "Bullet",
+      "prototype": true,
+      "tag": "PlayerBullet",
+      "lifespan": 3.0,
+      "transform": {
+        "pos": [ 500, 500 ],
+        "rot": 0.0,
+        "scale": 1.0
+      },
+      "damping": 1.0,
+      "speed": 800.0,
+      "active": true,
+      "components": [
+        {
+          "type": "SpriteRendererComponent",
+          "texture": "Images/bullet.png"
+        },
+        {
+          "type": "Box2DPhysicsComponent",
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "size": [ 48, 48 ],
+          "gravity_scale": 0.0,
+          "is_sensor": true
+        }
+      ]
+    }
+  ]
+  }

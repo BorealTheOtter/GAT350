@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{af5219e3-9e5a-4595-befb-2fbcfb2e715f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sprite Game">
+      <UniqueIdentifier>{093f8164-f69b-4e42-bfba-dba0223573e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpaceGame">
+      <UniqueIdentifier>{09612e47-2134-454e-8ef9-f18bfb208de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpaceGame\Animations">
+      <UniqueIdentifier>{f3b30eb5-3b35-4b30-a291-8a478ddef54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpaceGame\Tilemaps">
+      <UniqueIdentifier>{1b17fa3c-9346-4f5b-b22e-6a4efcbd619b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpriteGame">
+      <UniqueIdentifier>{46417c35-f530-42fe-870d-99cc0438e4e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpriteGame\Animations">
+      <UniqueIdentifier>{449ded6c-a075-4041-940f-09205093e4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpriteGame\Tilemaps">
+      <UniqueIdentifier>{0e407e61-cbab-4b11-8b01-a64ea10a7a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\SpriteGame\Animations\werewolf">
+      <UniqueIdentifier>{88106217-49dc-4f5d-b3d5-c2fdbb5e4279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Space Game">
+      <UniqueIdentifier>{aed7f8b7-1314-4cd3-819f-7cc6f35b0418}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceGame\Assets.cpp">
+      <Filter>Source\Space Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceGame\Bullet.cpp">
+      <Filter>Source\Space Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceGame\Enemy.cpp">
+      <Filter>Source\Space Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceGame\Player.cpp">
+      <Filter>Source\Space Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceGame\SpaceGame.cpp">
+      <Filter>Source\Space Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\SpriteGame.cpp">
+      <Filter>Sprite Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\PlayerController.cpp">
+      <Filter>Sprite Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\EnemyController.cpp">
+      <Filter>Sprite Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\FlyingEnemyController.cpp">
+      <Filter>Sprite Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\CharacterBase.cpp">
+      <Filter>Sprite Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\Damager.cpp">
+      <Filter>Sprite Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Build\Assets\SpaceGame\Tilemaps\world.json">
+      <Filter>Resource Files\SpaceGame\Tilemaps</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpaceGame\Animations\bomb_explode.json">
+      <Filter>Resource Files\SpaceGame\Animations</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpaceGame\Animations\coin_idle.json">
+      <Filter>Resource Files\SpaceGame\Animations</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpaceGame\Data\stupid.json">
+      <Filter>Resource Files\SpaceGame</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Data\scene.json">
+      <Filter>Resource Files\SpriteGame</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_attack.json">
+      <Filter>Resource Files\SpriteGame\Animations\werewolf</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_attack2.json">
+      <Filter>Resource Files\SpriteGame\Animations\werewolf</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_death.json">
+      <Filter>Resource Files\SpriteGame\Animations\werewolf</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_hurt.json">
+      <Filter>Resource Files\SpriteGame\Animations\werewolf</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_idle.json">
+      <Filter>Resource Files\SpriteGame\Animations\werewolf</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Animations\werewolf\werewolf_run.json">
+      <Filter>Resource Files\SpriteGame\Animations\werewolf</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\SpriteGame\Data\level.json">
+      <Filter>Resource Files\SpriteGame</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SpaceGame\Assets.h">
+      <Filter>Source\Space Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceGame\Bullet.h">
+      <Filter>Source\Space Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceGame\Enemy.h">
+      <Filter>Source\Space Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceGame\Player.h">
+      <Filter>Source\Space Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceGame\SpaceGame.h">
+      <Filter>Source\Space Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\SpriteGame.h">
+      <Filter>Sprite Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\PlayerController.h">
+      <Filter>Sprite Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\EnemyController.h">
+      <Filter>Sprite Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\FlyingEnemyController.h">
+      <Filter>Sprite Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\CharacterBase.h">
+      <Filter>Sprite Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\Damager.h">
+      <Filter>Sprite Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
