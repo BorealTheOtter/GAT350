@@ -189,12 +189,12 @@ namespace sr
             // configure the color target attachments (This handles clearing the screen)
             SDL_GPUColorTargetInfo color_target_info{};
             color_target_info.texture = swapchainTexture;
-            color_target_info.clear_color = SDL_FColor{ 1.0f, 0.0f, 1.0f, 1.0f };
+            color_target_info.clear_color = SDL_FColor{ 0.2f, 0.2f, 0.2f, 1.0f };
             color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
             color_target_info.store_op = SDL_GPU_STOREOP_STORE;
 
             m_renderPass = SDL_BeginGPURenderPass(m_cmdBuf, &color_target_info, 1, nullptr);
-            SDL_EndGPURenderPass(m_renderPass);
+            
         }
 
         return true;
@@ -202,11 +202,13 @@ namespace sr
 
     bool Renderer::EndFrame() const
     {
+        SDL_EndGPURenderPass(m_renderPass);
         if (!SDL_SubmitGPUCommandBuffer(m_cmdBuf))
         {
             std::cerr << "Could not submit command buffer: " << SDL_GetError() << std::endl;
             return false;
         }
+        
 
         return true;
     }

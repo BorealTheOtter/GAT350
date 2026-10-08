@@ -13,9 +13,9 @@ struct Vertex
 
 std::vector<Vertex> vertices =
 {
-    Vertex{ -1.0f, -1.0f, 0.0f}, // Bottom-Left
-    Vertex{  1.0f, -1.0f, 0.0f}, // Bottom-Right
-    Vertex{  0.0f,  1.0f, 0.0f}, // Top-Middle
+    Vertex{ -0.82f, -0.53f, 0.0f}, // Bottom-Left
+    Vertex{  0.64f, -0.74f, 0.0f}, // Bottom-Right
+    Vertex{  0.26f,  0.83f, 0.0f}, // Top-Middle
 };
 
 int main()
