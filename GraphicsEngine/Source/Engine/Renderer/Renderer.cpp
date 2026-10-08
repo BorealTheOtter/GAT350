@@ -3,6 +3,8 @@
 #include "Renderer/Texture.h"
 #include "Math/MathUtils.h"
 #include "Math/Rect.h"
+#include "Pipeline.h"
+#include "VertexBuffer.h"
 
 namespace sr
 {
@@ -212,6 +214,23 @@ namespace sr
     void Renderer::DebugText(float x, float y, const char* text) const
     {
         SDL_RenderDebugText(m_renderer, x, y, text);
+    }
+
+    void Renderer::SetPipeline(const Pipeline& pipeline)
+    {
+        SDL_BindGPUGraphicsPipeline(m_renderPass, pipeline.m_gpuPipeline);
+    }
+
+    void Renderer::SetVertexBuffer(const VertexBuffer& vertexBuffer)
+    {
+        SDL_GPUBufferBinding binding{.buffer = vertexBuffer.m_gpuBuffer,.offset = 0};
+
+        SDL_BindGPUVertexBuffers(m_renderPass, 0, &binding, 1);
+    }
+
+    void Renderer::Draw(uint32_t vertexCount)
+    {
+        SDL_DrawGPUPrimitives(m_renderPass, vertexCount, 1, 0, 0);
     }
 
     void Renderer::Quit() const

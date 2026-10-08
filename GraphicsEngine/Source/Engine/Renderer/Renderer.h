@@ -43,9 +43,18 @@ namespace sr
 
 		void SetCamera(const Vector2& camera) { m_camera = camera; }
 		void EnableCamera(bool active = true) { m_camActive = active; }
+
+		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
+		SDL_Window* GetWindow() const { return m_window; }
+
+		void SetPipeline(const class Pipeline& pipeline);
+		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
+		void Draw(uint32_t vertexCount);
+
 	private:
 		friend class Text;
 		friend class Texture;
+		friend class Shader;
 
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
