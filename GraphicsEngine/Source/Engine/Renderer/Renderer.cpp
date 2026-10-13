@@ -235,6 +235,16 @@ namespace sr
         SDL_DrawGPUPrimitives(m_renderPass, vertexCount, 1, 0, 0);
     }
 
+    void Renderer::SetVertexUniform(uint32_t slot, const void* data, uint32_t size)
+    {
+        SDL_PushGPUVertexUniformData(m_cmdBuf, slot, data, size);
+    }
+
+    void Renderer::SetFragmentUniform(uint32_t slot, const void* data, uint32_t size)
+    {
+        SDL_PushGPUFragmentUniformData(m_cmdBuf, slot, data, size);
+    }
+
     void Renderer::Quit() const
     {
         TTF_Quit();

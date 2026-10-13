@@ -12,7 +12,7 @@ namespace sr
 		}
 	}
 
-	bool Shader::Load(const std::string& filename, Renderer& renderer)
+	bool Shader::Load(const std::string& filename, Renderer& renderer, uint32_t uniformCount)
 	{
 		// store the renderer's gpu device in m_gpuDevice so the destructor can release the shader later
 		m_gpuDevice = renderer.GetGPUDevice();
@@ -75,7 +75,7 @@ namespace sr
 
 		// fill out the shader settings
 		// each field below needs a value, replace each {} using the comment beside it
-		SDL_GPUShaderCreateInfo shaderInfo{.code_size = bytes.size(), .code = bytes.data(), .entrypoint = entrypoint, .format = format, .stage = stage};
+		SDL_GPUShaderCreateInfo shaderInfo{.code_size = bytes.size(), .code = bytes.data(), .entrypoint = entrypoint, .format = format, .stage = stage, .num_uniform_buffers = uniformCount};
 
 		// create the shader with SDL_CreateGPUShader(device, &createInfo) and store it in m_gpuShader
 		m_gpuShader = SDL_CreateGPUShader(m_gpuDevice, &shaderInfo);

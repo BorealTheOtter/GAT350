@@ -10,7 +10,7 @@ namespace sr
 	public:
 		virtual ~Shader();
 
-		bool Load(const std::string& filename, class Renderer& renderer);
+		bool Load(const std::string& filename, class Renderer& renderer, uint32_t uniformCount = 0);
 
 		friend class Pipeline;
 

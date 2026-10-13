@@ -6,16 +6,22 @@
 
 using namespace sr;
 
+struct Color4 {
+    float r, g, b, a;
+};
 struct Vertex
 {
-    float x, y, z;
+    Vector3 pos;
+    Color4 color;
 };
+
+
 
 std::vector<Vertex> vertices =
 {
-    Vertex{ -0.82f, -0.53f, 0.0f}, // Bottom-Left
-    Vertex{  0.64f, -0.74f, 0.0f}, // Bottom-Right
-    Vertex{  0.26f,  0.83f, 0.0f}, // Top-Middle
+    Vertex{Vector3{-0.82f, -0.53f, 0.0f}, Color4{1.0f,0.0f,0.0f,1.0f}}, // Bottom-Left
+    Vertex{Vector3{0.64f, -0.74f, 0.0f}, Color4{0.0f,1.0f,0.0f,1.0f}}, // Bottom-Right
+    Vertex{Vector3{0.26f,  0.83f, 0.0f}, Color4{0.0f,0.0f,1.0f,1.0f}}, // Top-Middle
 };
 
 int main()
@@ -28,19 +34,28 @@ int main()
     auto vb = std::make_shared<VertexBuffer>();
     vb->Create<Vertex>(vertices, Engine::Get().GetRenderer().GetGPUDevice());
 
-    auto vshader = Resources().Get<sr::Shader>("Shaders/position.vert", Engine::Get().GetRenderer());
-    auto fshader = Resources().Get<sr::Shader>("Shaders/color.frag", Engine::Get().GetRenderer());
+    auto vshader = Resources().Get<sr::Shader>("Shaders/position.vert", Engine::Get().GetRenderer(), 1);
+    auto fshader = Resources().Get<sr::Shader>("Shaders/color.frag", Engine::Get().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
     pipeline->AddVertexBuffer(sizeof(Vertex));
+    //pos
     pipeline->AddVertexAttribute(
         0,
         SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-        offsetof(Vertex, x));
+        offsetof(Vertex, pos));
+    //color
+    pipeline->AddVertexAttribute(
+        1,
+        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
+        offsetof(Vertex, color));
 
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Get().GetRenderer().GetGPUDevice(),
         Engine::Get().GetRenderer().GetWindow());
+
+    float scale = 0.5f;
+    Color4 color = { 0,0,0,1 };
 
     //MAIN LOOP
     bool quit = false;
@@ -60,6 +75,10 @@ int main()
         Engine::Get().Update();
 
         float dt = Engine::Get().GetTime().GetDeltaTime();
+
+        scale = sin(Engine::Get().GetTime().GetTime());
+        color.r = sin(Engine::Get().GetTime().GetTime() * -2) * 0.5 + 0.5;
+        color.b = cos(Engine::Get().GetTime().GetTime() * 3) * 0.5 + 0.5;
             
         //RENDER
                 // RENDER
@@ -67,6 +86,11 @@ int main()
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
         Engine::Get().GetRenderer().SetVertexBuffer(*vb);
+
+        Engine::Get().GetRenderer().SetVertexUniform(0, &scale, sizeof(scale));
+        Engine::Get().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
+        
+
         Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
 
         Engine::Get().GetRenderer().EndFrame();
