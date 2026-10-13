@@ -21,4 +21,9 @@
 #include "rapidjson/error/en.h"
 #include <rapidjson/istreamwrapper.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
 #endif //PCH_H

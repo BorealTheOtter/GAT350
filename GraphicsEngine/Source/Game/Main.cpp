@@ -4,7 +4,14 @@
 #include "Renderer/Pipeline.h"
 #include <memory>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 using namespace sr;
+
+struct vertexUniform {
+    glm::mat4 model;
+};
 
 struct Color4 {
     float r, g, b, a;
@@ -57,6 +64,8 @@ int main()
     float scale = 0.5f;
     Color4 color = { 0,0,0,1 };
 
+    vertexUniform uniform;
+
     //MAIN LOOP
     bool quit = false;
     while (!quit) {
@@ -75,20 +84,29 @@ int main()
         Engine::Get().Update();
 
         float dt = Engine::Get().GetTime().GetDeltaTime();
+        float time = Engine::Get().GetTime().GetTime();
 
         scale = sin(Engine::Get().GetTime().GetTime());
-        color.r = sin(Engine::Get().GetTime().GetTime() * -2) * 0.5 + 0.5;
-        color.b = cos(Engine::Get().GetTime().GetTime() * 3) * 0.5 + 0.5;
+
+        uniform.model = glm::mat4(1.0f);
+
+        auto mxs = glm::scale(glm::mat4{ 1.0f }, glm::vec3(0.5f, 0.5f, 0.5f));
+        auto mxr = glm::rotate(glm::mat4{ 1.0f }, glm::radians(90.0f) * time, glm::vec3(0.0f, 0.0f, 1.0f));
+        auto mxt = glm::translate(glm::mat4{ 1.0f }, glm::vec3(0.5f, 0.0f, 0.0f));
+        uniform.model = mxs * mxr * mxt;
+
+
+        //uniform.model = glm::scale(uniform.model, glm::vec3(0.5f, 0.5f, 0.5f));
+        //uniform.model = glm::rotate(uniform.model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        //uniform.model = glm::translate(uniform.model, glm::vec3(0.5f, 0.0f, 0.0f));
             
         //RENDER
-                // RENDER
         Engine::Get().GetRenderer().BeginFrame();
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
         Engine::Get().GetRenderer().SetVertexBuffer(*vb);
 
-        Engine::Get().GetRenderer().SetVertexUniform(0, &scale, sizeof(scale));
-        Engine::Get().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
+        Engine::Get().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
         
 
         Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
