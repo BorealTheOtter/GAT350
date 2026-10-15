@@ -5,6 +5,7 @@
 #include "Math/Rect.h"
 #include "Pipeline.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 namespace sr
 {
@@ -230,9 +231,21 @@ namespace sr
         SDL_BindGPUVertexBuffers(m_renderPass, 0, &binding, 1);
     }
 
+    void Renderer::SetIndexBuffer(const IndexBuffer& indexBuffer)
+    {
+        SDL_GPUBufferBinding binding{ .buffer = indexBuffer.m_gpuBuffer,.offset = 0 };
+
+        SDL_BindGPUIndexBuffer(m_renderPass, &binding, SDL_GPU_INDEXELEMENTSIZE_32BIT);
+    }
+
     void Renderer::Draw(uint32_t vertexCount)
     {
         SDL_DrawGPUPrimitives(m_renderPass, vertexCount, 1, 0, 0);
+    }
+
+    void Renderer::DrawIndex(const IndexBuffer& indexBuffer)
+    {
+        SDL_DrawGPUIndexedPrimitives(m_renderPass, indexBuffer.GetIndexCount(), 1, 0, 0, 0);
     }
 
     void Renderer::SetVertexUniform(uint32_t slot, const void* data, uint32_t size)

@@ -1,14 +1,15 @@
+#include "Engine.h"
+#include "Renderer/Shader.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/Pipeline.h"
+#include <memory>
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/transform.hpp>
-
-#include "Engine.h"
-#include "Renderer/Shader.h"
-#include "Renderer/VertexBuffer.h"
-#include "Renderer/Pipeline.h"
-#include <memory>
 
 
 using namespace sr;
@@ -32,10 +33,12 @@ glm::vec3 cameraPos{ 0,0,5 };
 std::vector<Vertex> vertices =
 {
     Vertex{Vector3{-0.5f, -0.5f, 0.0f}, Color4{1.0f,0.0f,0.0f,1.0f}}, // Bottom-Left
-    Vertex{Vector3{-0.5f, 0.5f, 0.0f}, Color4{0.0f,1.0f,0.0f,1.0f}}, // Bottom-Right
-    Vertex{Vector3{0.5f,  -0.5f, 0.0f}, Color4{0.0f,0.0f,1.0f,1.0f}}, // Top-Left
-    Vertex{Vector3{0.5f,  0.5f, 0.0f}, Color4{1.0f,1.0f,1.0f,1.0f}}, // Top-Right
+    Vertex{Vector3{0.5f, -0.5f, 0.0f}, Color4{0.0f,1.0f,0.0f,1.0f}}, // Bottom-Right
+    Vertex{Vector3{0.5f,  0.5f, 0.0f}, Color4{0.0f,0.0f,1.0f,1.0f}}, // Top-Right
+    Vertex{Vector3{-0.5f,  0.5f, 0.0f}, Color4{1.0f,1.0f,1.0f,1.0f}}, // Top-Left
 };
+
+std::vector<uint32_t> indices = { 0,1,2,2,3,0 };
 
 int main()
 {
@@ -47,11 +50,15 @@ int main()
     auto vb = std::make_shared<VertexBuffer>();
     vb->Create<Vertex>(vertices, Engine::Get().GetRenderer());
 
+    auto ib = std::make_shared<IndexBuffer>();
+    ib->Create(indices, Engine::Get().GetRenderer());
+
     auto vshader = Resources().Get<sr::Shader>("Shaders/position.vert", Engine::Get().GetRenderer(), 1);
     auto fshader = Resources().Get<sr::Shader>("Shaders/color.frag", Engine::Get().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
     pipeline->AddVertexBuffer(sizeof(Vertex));
+
     //pos
     pipeline->AddVertexAttribute(
         0,
@@ -121,11 +128,12 @@ int main()
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
         Engine::Get().GetRenderer().SetVertexBuffer(*vb);
+        Engine::Get().GetRenderer().SetIndexBuffer(*ib);
 
         Engine::Get().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
         
 
-        Engine::Get().GetRenderer().Draw(vb->GetVertexCount());
+        Engine::Get().GetRenderer().DrawIndex(*ib);
 
         Engine::Get().GetRenderer().EndFrame();
         }
