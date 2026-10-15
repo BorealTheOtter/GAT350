@@ -58,6 +58,7 @@ namespace sr
 		friend class Text;
 		friend class Texture;
 		friend class Shader;
+		friend class VertexBuffer;
 
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;

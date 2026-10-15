@@ -1,16 +1,20 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "Engine.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/Pipeline.h"
 #include <memory>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 using namespace sr;
 
 struct vertexUniform {
-    glm::mat4 model;
+    glm::mat4 mvp;
 };
 
 struct Color4 {
@@ -22,13 +26,15 @@ struct Vertex
     Color4 color;
 };
 
-
+vertexUniform uniform;
+glm::vec3 cameraPos{ 0,0,5 };
 
 std::vector<Vertex> vertices =
 {
-    Vertex{Vector3{-0.82f, -0.53f, 0.0f}, Color4{1.0f,0.0f,0.0f,1.0f}}, // Bottom-Left
-    Vertex{Vector3{0.64f, -0.74f, 0.0f}, Color4{0.0f,1.0f,0.0f,1.0f}}, // Bottom-Right
-    Vertex{Vector3{0.26f,  0.83f, 0.0f}, Color4{0.0f,0.0f,1.0f,1.0f}}, // Top-Middle
+    Vertex{Vector3{-0.5f, -0.5f, 0.0f}, Color4{1.0f,0.0f,0.0f,1.0f}}, // Bottom-Left
+    Vertex{Vector3{-0.5f, 0.5f, 0.0f}, Color4{0.0f,1.0f,0.0f,1.0f}}, // Bottom-Right
+    Vertex{Vector3{0.5f,  -0.5f, 0.0f}, Color4{0.0f,0.0f,1.0f,1.0f}}, // Top-Left
+    Vertex{Vector3{0.5f,  0.5f, 0.0f}, Color4{1.0f,1.0f,1.0f,1.0f}}, // Top-Right
 };
 
 int main()
@@ -39,7 +45,7 @@ int main()
     Engine::Get().Initialize();
 
     auto vb = std::make_shared<VertexBuffer>();
-    vb->Create<Vertex>(vertices, Engine::Get().GetRenderer().GetGPUDevice());
+    vb->Create<Vertex>(vertices, Engine::Get().GetRenderer());
 
     auto vshader = Resources().Get<sr::Shader>("Shaders/position.vert", Engine::Get().GetRenderer(), 1);
     auto fshader = Resources().Get<sr::Shader>("Shaders/color.frag", Engine::Get().GetRenderer(), 1);
@@ -86,19 +92,29 @@ int main()
         float dt = Engine::Get().GetTime().GetDeltaTime();
         float time = Engine::Get().GetTime().GetTime();
 
-        scale = sin(Engine::Get().GetTime().GetTime());
+        glm::vec3 dir{ 0 };
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) dir.y += 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) dir.x -= 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) dir.y -= 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) dir.x += 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E)) dir.z -= 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_Q)) dir.z += 4;
 
-        uniform.model = glm::mat4(1.0f);
+        cameraPos += dir * dt;
 
+        auto mxt = glm::translate(glm::mat4{ 1.0f }, glm::vec3(0.0f, 0.0f, 1.0f));
+        auto mxr = glm::eulerAngleXYZ(0.0f,0.0f, time * 3.0f);
         auto mxs = glm::scale(glm::mat4{ 1.0f }, glm::vec3(0.5f, 0.5f, 0.5f));
-        auto mxr = glm::rotate(glm::mat4{ 1.0f }, glm::radians(90.0f) * time, glm::vec3(0.0f, 0.0f, 1.0f));
-        auto mxt = glm::translate(glm::mat4{ 1.0f }, glm::vec3(0.5f, 0.0f, 0.0f));
-        uniform.model = mxs * mxr * mxt;
+        auto model = mxt * mxr * mxs;
 
+        //View Matrix
+        auto view = glm::lookAtRH(cameraPos, cameraPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
 
-        //uniform.model = glm::scale(uniform.model, glm::vec3(0.5f, 0.5f, 0.5f));
-        //uniform.model = glm::rotate(uniform.model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        //uniform.model = glm::translate(uniform.model, glm::vec3(0.5f, 0.0f, 0.0f));
+        //projection matrix
+        float aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
+        auto projection = glm::perspectiveRH(glm::radians(45.0f), aspectRatio, 0.01f, 20.0f);
+
+        uniform.mvp = projection * view * model;
             
         //RENDER
         Engine::Get().GetRenderer().BeginFrame();

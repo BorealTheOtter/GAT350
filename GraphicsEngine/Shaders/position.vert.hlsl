@@ -1,6 +1,6 @@
 cbuffer Uniforms : register(b0, space1)
 {
-    float4x4 model;
+    float4x4 mvp;
 };
 
 
@@ -19,7 +19,7 @@ struct Output
 Output main(Input input)
 {
     Output output;
-    output.Position = mul(model, float4(input.position, 1.0f));
+    output.Position = mul(mvp, float4(input.position, 1.0f));
     output.Color = input.color;
 
     return output;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "VertexBuffer.h"
+#include "Renderer.h"
 
 namespace sr
 {
@@ -12,10 +13,10 @@ namespace sr
 		}
 	}
 
-	bool VertexBuffer::Create(uint32_t vertexCount, uint32_t vertexSize, const uint8_t* data, SDL_GPUDevice* gpuDevice)
+	bool VertexBuffer::Create(uint32_t vertexCount, uint32_t vertexSize, const uint8_t* data, const Renderer& renderer)
 	{
 		m_vertexCount = vertexCount;
-		m_gpuDevice = gpuDevice;
+		m_gpuDevice = renderer.m_gpuDevice;
 
 		uint32_t verticesSize = m_vertexCount * vertexSize;
 
@@ -46,7 +47,7 @@ namespace sr
 		{
 			std::cerr << "Could not create transfer buffer: " << SDL_GetError() << std::endl;
 
-			SDL_ReleaseGPUBuffer(gpuDevice, m_gpuBuffer);
+			SDL_ReleaseGPUBuffer(renderer.m_gpuDevice, m_gpuBuffer);
 			m_gpuBuffer = nullptr;
 
 			return false;
@@ -62,8 +63,8 @@ namespace sr
 		{
 			std::cerr << "Could not map transfer buffer: " << SDL_GetError() << std::endl;
 
-			SDL_ReleaseGPUTransferBuffer(gpuDevice, transferBuffer);
-			SDL_ReleaseGPUBuffer(gpuDevice, m_gpuBuffer);
+			SDL_ReleaseGPUTransferBuffer(renderer.m_gpuDevice, transferBuffer);
+			SDL_ReleaseGPUBuffer(renderer.m_gpuDevice, m_gpuBuffer);
 			m_gpuBuffer = nullptr;
 
 			return false;
@@ -83,8 +84,8 @@ namespace sr
 		{
 			std::cerr << "Could not acquire GPU command buffer: " << SDL_GetError() << std::endl;
 
-			SDL_ReleaseGPUTransferBuffer(gpuDevice, transferBuffer);
-			SDL_ReleaseGPUBuffer(gpuDevice, m_gpuBuffer);
+			SDL_ReleaseGPUTransferBuffer(renderer.m_gpuDevice, transferBuffer);
+			SDL_ReleaseGPUBuffer(renderer.m_gpuDevice, m_gpuBuffer);
 			m_gpuBuffer = nullptr;
 
 			return false;
@@ -116,8 +117,8 @@ namespace sr
 		{
 			std::cerr << "Could not submit GPU command buffer: " << SDL_GetError() << std::endl;
 
-			SDL_ReleaseGPUTransferBuffer(gpuDevice, transferBuffer);
-			SDL_ReleaseGPUBuffer(gpuDevice, m_gpuBuffer);
+			SDL_ReleaseGPUTransferBuffer(renderer.m_gpuDevice, transferBuffer);
+			SDL_ReleaseGPUBuffer(renderer.m_gpuDevice, m_gpuBuffer);
 			m_gpuBuffer = nullptr;
 
 			return false;
