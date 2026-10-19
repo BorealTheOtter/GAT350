@@ -30,6 +30,8 @@ struct Vertex
 vertexUniform uniform;
 glm::vec3 cameraPos{ 0,0,5 };
 
+Transform transform;
+
 std::vector<Vertex> vertices =
 {
     Vertex{Vector3{-0.5f, -0.5f, 0.0f}, Color4{1.0f,0.0f,0.0f,1.0f}}, // Bottom-Left
@@ -53,8 +55,8 @@ int main()
     auto ib = std::make_shared<IndexBuffer>();
     ib->Create(indices, Engine::Get().GetRenderer());
 
-    auto vshader = Resources().Get<sr::Shader>("Shaders/position.vert", Engine::Get().GetRenderer(), 1);
-    auto fshader = Resources().Get<sr::Shader>("Shaders/color.frag", Engine::Get().GetRenderer(), 1);
+    auto vshader = Resources().Get<sr::Shader>("Shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
+    auto fshader = Resources().Get<sr::Shader>("Shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
     pipeline->AddVertexBuffer(sizeof(Vertex));
@@ -109,10 +111,7 @@ int main()
 
         cameraPos += dir * dt;
 
-        auto mxt = glm::translate(glm::mat4{ 1.0f }, glm::vec3(0.0f, 0.0f, 1.0f));
-        auto mxr = glm::eulerAngleXYZ(0.0f,0.0f, time * 3.0f);
-        auto mxs = glm::scale(glm::mat4{ 1.0f }, glm::vec3(0.5f, 0.5f, 0.5f));
-        auto model = mxt * mxr * mxs;
+        transform.rot.z = time * 180;
 
         //View Matrix
         auto view = glm::lookAtRH(cameraPos, cameraPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
@@ -121,7 +120,7 @@ int main()
         float aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
         auto projection = glm::perspectiveRH(glm::radians(45.0f), aspectRatio, 0.01f, 20.0f);
 
-        uniform.mvp = projection * view * model;
+        uniform.mvp = projection * view * transform.GetMatrix();
             
         //RENDER
         Engine::Get().GetRenderer().BeginFrame();

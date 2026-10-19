@@ -20,7 +20,7 @@ namespace sr
 
 	struct ActorDesc 
 	{
-		Transform transform{ Vector2{0, 0}, 0.0, 1.0 };
+		Transform transform{ glm::vec3{0.0}, glm::vec3{0.0}, glm::vec3{1.0} };
 		res_t<Model> model;
 		res_t<Texture> texture;
 		std::string name;
@@ -54,9 +54,9 @@ namespace sr
 		const Transform& GetTransform() const { return m_transform; }
 		void SetTransform(const sr::Transform& transform) { m_transform = transform; }
 
-		void SetPosition(const Vector2& pos) { m_transform.pos = pos; }
-		void SetRotation(float rotation) { m_transform.rot = rotation; }
-		void SetScale(float scale) { m_transform.scale = scale; }
+		void SetPosition(const glm::vec3 pos) { m_transform.pos = pos; }
+		void SetRotation(const glm::vec3 rotation) { m_transform.rot = rotation; }
+		void SetScale(const glm::vec3 scale) { m_transform.scale = scale; }
 		
 		const std::string& GetName() const { return m_name; }
 		const std::string& GetTag() const { return m_tag; }

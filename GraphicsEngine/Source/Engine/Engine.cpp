@@ -11,7 +11,6 @@ namespace sr {
 		m_input.Initialize();
 		m_time.Reset();
 		m_audio.Initialize();
-		m_physics.Initialize();
 
 		return true;
 	}
@@ -21,13 +20,11 @@ namespace sr {
 		m_input.Shutdown();
 		m_particleSystem.Shutdown();
 		m_renderer.Quit();
-		m_physics.Shutdown();
 	}
 	void Engine::Update()
 	{
 		m_audio.Update();
 		m_particleSystem.Update(m_time.GetDeltaTime());
-		m_physics.Update(m_time.GetDeltaTime());
 		m_input.Update();
 		m_time.Tick();
 	}

@@ -68,21 +68,18 @@ namespace sr
 			}
 		}
 		
-		if (m_model) {
-			renderer.DrawModel(*m_model, m_transform);
-		}
 		if (m_texture) {
 			renderer.DrawTexture(*m_texture, m_transform);
 		}
 
 	}
-	float Actor::GetRadius() const
-	{
-			if(m_model) return m_model.get()->GetRadius() * m_transform.scale * 0.6f;
-			if (m_texture) return (m_texture->GetSize().Length() * 0.5f) * 0.6f;
+	//float Actor::GetRadius() const
+	//{
+	//		if(m_model) return m_model.get()->GetRadius() * m_transform.scale * 0.6f;
+	//		if (m_texture) return (m_texture->GetSize().Length() * 0.5f) * 0.6f;
 
-			return 0.0f;
-	}
+	//		return 0.0f;
+	//}
 	void Actor::Read(const json::value_t& value)
 	{
 		Object::Read(value);

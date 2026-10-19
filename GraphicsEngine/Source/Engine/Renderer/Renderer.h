@@ -29,8 +29,6 @@ namespace sr
 		void DrawFillRect(float x, float y, float width, float height) const; 
 		void DrawRect(float x, float y, float width, float height) const;
 		void DrawLine(float x1, float y1, float x2, float y2) const;
-
-		void DrawModel(const class Model& m, const Transform& t) const;
 		
 		
 		void DebugText(float x, float y, const char* text) const;

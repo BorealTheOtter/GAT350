@@ -89,36 +89,6 @@ namespace sr
 		SDL_RenderLine( m_renderer, x1, y1, x2, y2 );
     }
 
-    void Renderer::DrawModel(const Model& m, const Transform& t) const
-    {
-        for (auto mesh : m.GetMeshes()) {
-
-
-            SetColor(mesh.GetColor());
-
-            auto& points = mesh.GetPoints();
-
-            for (size_t i = 0; i + 1 < points.size(); i++)
-            {
-                Vector2 v1 = points[i];
-                Vector2 v2 = points[i + 1];
-
-                v1 *= t.scale;
-                v2 *= t.scale;
-
-                v1 = v1.Rotate(t.rot * math::DEG_TO_RAD);
-                v2 = v2.Rotate(t.rot * math::DEG_TO_RAD);
-
-
-                v1 += t.pos;
-                v2 += t.pos;
-
-                DrawLine(v1.x, v1.y, v2.x, v2.y);
-            }
-
-        }
-    }
-
     void Renderer::DrawTexture(const Texture& texture, Transform t, bool flipH, const Vector2& origin) const
     {
         Vector2 size = texture.GetSize();
@@ -127,8 +97,8 @@ namespace sr
         float cameraY = (m_camActive) ? m_camera.y : 0;
 
         SDL_FRect destRect;
-        destRect.w = size.x * t.scale;
-        destRect.h = size.y * t.scale;
+        destRect.w = size.x * t.scale.x;
+        destRect.h = size.y * t.scale.y;
 
         destRect.x = (t.pos.x - (cameraX - m_width * 0.5f)) - (destRect.w * origin.x);
         destRect.y = (t.pos.y - (cameraY - m_height * 0.5f)) - (destRect.h * origin.y);
@@ -136,7 +106,7 @@ namespace sr
 
 
         // https://wiki.libsdl.org/SDL3/SDL_RenderTextureRotated
-        SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, t.rot, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+        SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, t.rot.z, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     }
 
     void Renderer::DrawTexture(const Texture& texture, const Rect& source, Transform t, bool flipH, const Vector2& origin) const
@@ -151,14 +121,14 @@ namespace sr
         sourceRect.h = source.size.h;
 
         SDL_FRect destRect;
-        destRect.w = source.size.w * t.scale;
-        destRect.h = source.size.h * t.scale;
+        destRect.w = source.size.w * t.scale.x;
+        destRect.h = source.size.h * t.scale.y;
 
         destRect.x = (t.pos.x - (cameraX - m_width * 0.5f)) - (destRect.w * origin.x);
         destRect.y = (t.pos.y - (cameraY - m_height * 0.5f)) - (destRect.h * origin.y);
 
         // https://wiki.libsdl.org/SDL3/SDL_RenderTextureRotated
-        SDL_RenderTextureRotated(m_renderer, texture.m_texture, &sourceRect, &destRect, t.rot, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+        SDL_RenderTextureRotated(m_renderer, texture.m_texture, &sourceRect, &destRect, t.rot.z, NULL, (flipH) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     }
 
 
