@@ -23,8 +23,7 @@ namespace sr
 			return false;
 		}
 
-		// todo: start processing the scene from the root node with ProcessNode(node, scene, renderer)
-		// the root node is scene->mRootNode
+		ProcessNode(scene->mRootNode, scene, renderer);
 
 		return true;
 	}
@@ -33,12 +32,11 @@ namespace sr
 	{
 		for (const auto& mesh : m_meshes)
 		{
-			// todo: set the mesh vertex buffer on the renderer with renderer.SetVertexBuffer(vertexBuffer)
-			// the buffers are stored as unique_ptr, so dereference them with *
+			renderer.SetVertexBuffer(*mesh.vertexBuffer);
 
-			// todo: set the mesh index buffer on the renderer with renderer.SetIndexBuffer(indexBuffer)
+			renderer.SetIndexBuffer(*mesh.indexBuffer);
 
-			// todo: draw the mesh with renderer.DrawIndex(indexBuffer)
+			renderer.DrawIndex(*mesh.indexBuffer);
 		}
 	}
 
@@ -49,15 +47,13 @@ namespace sr
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-
-			// todo: process the mesh with ProcessMesh(mesh, scene, renderer)
+			ProcessMesh(mesh, scene, renderer);
 		}
 
 		// process the current node children
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			// todo: process the child node with ProcessNode(child, scene, renderer)
-			// the children are stored in node->mChildren, this is recursive so every node in the tree gets processed
+			ProcessNode(node->mChildren[i], scene, renderer);
 		}
 	}
 
@@ -73,7 +69,9 @@ namespace sr
 
 			// todo: set vertex.position from mesh->mVertices[i] (x, y, z)
 			// a mesh always has positions, so no null check is needed
-
+			vertex.position.x = mesh->mVertices[i].x;
+			vertex.position.y = mesh->mVertices[i].y;
+			vertex.position.z = mesh->mVertices[i].z;
 			// texcoords are optional, use (0, 0) if the mesh doesn't have them
 			vertex.texcoord = (mesh->mTextureCoords[0])
 				? glm::vec2{ mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y }
@@ -81,9 +79,14 @@ namespace sr
 
 			// todo: set vertex.normal from mesh->mNormals[i] (x, y, z)
 			// normals are optional, use (0, 0, 0) if mesh->mNormals is null (see texcoord above)
-
+				vertex.normal.x = mesh->mNormals[i].x;
+				vertex.normal.y = mesh->mNormals[i].y;
+				vertex.normal.z = mesh->mNormals[i].z;
 			// todo: set vertex.tangent from mesh->mTangents[i] (x, y, z)
 			// tangents are optional, use (0, 0, 0) if mesh->mTangents is null (see texcoord above)
+				vertex.tangent.x = mesh->mTangents[i].x;
+				vertex.tangent.y = mesh->mTangents[i].y;
+				vertex.tangent.z = mesh->mTangents[i].z;
 
 			vertices.push_back(vertex);
 		}
@@ -98,7 +101,7 @@ namespace sr
 			const aiFace& face = mesh->mFaces[i];
 			for (unsigned int j = 0; j < face.mNumIndices; j++)
 			{
-				// todo: add the face index face.mIndices[j] to indices
+				indices.push_back(face.mIndices[j]);
 			}
 		}
 
@@ -120,7 +123,8 @@ namespace sr
 
 			return;
 		}
-
+		
+		m_meshes.push_back(std::move(newMesh));
 		// todo: add newMesh to m_meshes
 		// Mesh holds unique_ptrs so it can't be copied, use std::move(newMesh)
 	}

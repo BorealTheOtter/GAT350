@@ -49,13 +49,13 @@ int main()
     //INITIALIZE
     Engine::Get().Initialize();
 
-    auto vb = std::make_shared<VertexBuffer>();
-    vb->Create<Vertex>(vertices, Engine::Get().GetRenderer());
+    //auto vb = std::make_shared<VertexBuffer>();
+    //vb->Create<Vertex>(vertices, Engine::Get().GetRenderer());
 
-    auto ib = std::make_shared<IndexBuffer>();
-    ib->Create(indices, Engine::Get().GetRenderer());
+    //auto ib = std::make_shared<IndexBuffer>();
+    //ib->Create(indices, Engine::Get().GetRenderer());
 
-    auto model = Resources().Get<Model>("Models/cube-3.obj", Engine::Get().GetRenderer());
+    auto model = Resources().Get<Model>("Models/Mayu 3.6.0.obj", Engine::Get().GetRenderer());
 
     auto vshader = Resources().Get<sr::Shader>("Shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
     auto fshader = Resources().Get<sr::Shader>("Shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
@@ -107,7 +107,8 @@ int main()
 
         cameraPos += dir * dt;
 
-        transform.rot.z = time * 180;
+        //transform.rot.y = time * 90;
+        //transform.rot.x = time * 180;
 
         //View Matrix
         auto view = glm::lookAtRH(cameraPos, cameraPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });

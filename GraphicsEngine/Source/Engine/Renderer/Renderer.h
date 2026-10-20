@@ -61,6 +61,7 @@ namespace sr
 		friend class Shader;
 		friend class VertexBuffer;
 		friend class IndexBuffer;
+		friend class Model;
 
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
