@@ -55,7 +55,7 @@ int main()
     //auto ib = std::make_shared<IndexBuffer>();
     //ib->Create(indices, Engine::Get().GetRenderer());
 
-    auto model = Resources().Get<Model>("Models/Mayu 3.6.0.obj", Engine::Get().GetRenderer());
+    auto model = Resources().Get<Model>("Models/suzanne.obj", Engine::Get().GetRenderer());
 
     auto vshader = Resources().Get<sr::Shader>("Shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
     auto fshader = Resources().Get<sr::Shader>("Shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
