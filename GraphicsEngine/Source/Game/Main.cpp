@@ -55,31 +55,27 @@ int main()
     auto ib = std::make_shared<IndexBuffer>();
     ib->Create(indices, Engine::Get().GetRenderer());
 
+    auto model = Resources().Get<Model>("Models/cube-3.obj", Engine::Get().GetRenderer());
+
     auto vshader = Resources().Get<sr::Shader>("Shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
     auto fshader = Resources().Get<sr::Shader>("Shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
-    pipeline->AddVertexBuffer(sizeof(Vertex));
 
-    //pos
-    pipeline->AddVertexAttribute(
-        0,
-        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-        offsetof(Vertex, pos));
-    //color
-    pipeline->AddVertexAttribute(
-        1,
-        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-        offsetof(Vertex, color));
+    pipeline->AddVertexBuffer(sizeof(Model::Vertex));
+    pipeline->AddVertexAttribute(0, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, position));
+    pipeline->AddVertexAttribute(1, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2, offsetof(Model::Vertex, texcoord));
+    pipeline->AddVertexAttribute(2, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, normal));
+    pipeline->AddVertexAttribute(3, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, tangent));
+
+    float scale = 0.5f;
+    Color4 tint = { 1,1,1,1 };
+
+    vertexUniform uniform;
 
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Get().GetRenderer().GetGPUDevice(),
         Engine::Get().GetRenderer().GetWindow());
-
-    float scale = 0.5f;
-    Color4 color = { 0,0,0,1 };
-
-    vertexUniform uniform;
 
     //MAIN LOOP
     bool quit = false;
@@ -126,13 +122,10 @@ int main()
         Engine::Get().GetRenderer().BeginFrame();
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
-        Engine::Get().GetRenderer().SetVertexBuffer(*vb);
-        Engine::Get().GetRenderer().SetIndexBuffer(*ib);
-
         Engine::Get().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
-        
+        Engine::Get().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
 
-        Engine::Get().GetRenderer().DrawIndex(*ib);
+        model->Draw(Engine::Get().GetRenderer());
 
         Engine::Get().GetRenderer().EndFrame();
         }
