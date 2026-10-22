@@ -15,7 +15,6 @@
 #include "Core/File.h"
 #include "Audio/Audio.h"
 #include "Renderer/Text.h"
-#include "Renderer/Texture.h"
 #include "Renderer/ParticleSystem.h"
 #include "Resources/ResourceManager.h"
 #include "Serialization/Json.h"

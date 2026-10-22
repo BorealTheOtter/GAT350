@@ -67,10 +67,6 @@ namespace sr
 				rendererComponent->Draw(renderer);
 			}
 		}
-		
-		if (m_texture) {
-			renderer.DrawTexture(*m_texture, m_transform);
-		}
 
 	}
 	//float Actor::GetRadius() const

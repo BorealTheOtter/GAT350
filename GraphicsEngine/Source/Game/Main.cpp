@@ -3,6 +3,7 @@
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/Pipeline.h"
+#include "Renderer/Texture.h"
 #include <memory>
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -32,16 +33,6 @@ glm::vec3 cameraPos{ 0,0,5 };
 
 Transform transform;
 
-std::vector<Vertex> vertices =
-{
-    Vertex{Vector3{-0.5f, -0.5f, 0.0f}, Color4{1.0f,0.0f,0.0f,1.0f}}, // Bottom-Left
-    Vertex{Vector3{0.5f, -0.5f, 0.0f}, Color4{0.0f,1.0f,0.0f,1.0f}}, // Bottom-Right
-    Vertex{Vector3{0.5f,  0.5f, 0.0f}, Color4{0.0f,0.0f,1.0f,1.0f}}, // Top-Right
-    Vertex{Vector3{-0.5f,  0.5f, 0.0f}, Color4{1.0f,1.0f,1.0f,1.0f}}, // Top-Left
-};
-
-std::vector<uint32_t> indices = { 0,1,2,2,3,0 };
-
 int main()
 {
     SetWorkingDirectory("Assets");
@@ -55,10 +46,12 @@ int main()
     //auto ib = std::make_shared<IndexBuffer>();
     //ib->Create(indices, Engine::Get().GetRenderer());
 
-    auto model = Resources().Get<Model>("Models/suzanne.obj", Engine::Get().GetRenderer());
+    auto model = Resources().Get<Model>("Models/Mayu 3.6.0.obj", Engine::Get().GetRenderer());
+    auto texture1 = Resources().Get<Texture>("Textures/TORA_base_color_1001.png", Engine::Get().GetRenderer());
+    auto texture2 = Resources().Get<Texture>("Textures/TORA_base_color_1002.png", Engine::Get().GetRenderer());
 
-    auto vshader = Resources().Get<sr::Shader>("Shaders/unlit.vert", Engine::Get().GetRenderer(), 1);
-    auto fshader = Resources().Get<sr::Shader>("Shaders/unlit.frag", Engine::Get().GetRenderer(), 1);
+    auto vshader = Resources().Get<sr::Shader>("shaders/lit.vert", Engine::Get().GetRenderer(), 1);
+    auto fshader = Resources().Get<sr::Shader>("shaders/lit.frag", Engine::Get().GetRenderer(), 1, 1);
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -107,8 +100,7 @@ int main()
 
         cameraPos += dir * dt;
 
-        //transform.rot.y = time * 90;
-        //transform.rot.x = time * 180;
+        transform.rot.x = time * 90;
 
         //View Matrix
         auto view = glm::lookAtRH(cameraPos, cameraPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
@@ -125,6 +117,8 @@ int main()
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
         Engine::Get().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
         Engine::Get().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
+
+        Engine::Get().GetRenderer().SetFragmentTexture(0, *texture1);
 
         model->Draw(Engine::Get().GetRenderer());
 

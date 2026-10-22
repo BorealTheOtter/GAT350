@@ -35,9 +35,6 @@ namespace sr
 
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
-		
-		void DrawTexture(const class Texture& texture, Transform t, bool flipH = false, const Vector2& origin = {0.5f,0.5f}) const;
-		void DrawTexture(const class Texture& texture,const struct Rect& source, Transform t, bool flipH = false, const Vector2& origin = { 0.5f,0.5f }) const;
 
 		void SetCamera(const Vector2& camera) { m_camera = camera; }
 		void EnableCamera(bool active = true) { m_camActive = active; }
@@ -48,6 +45,10 @@ namespace sr
 		void SetPipeline(const class Pipeline& pipeline);
 		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
 		void SetIndexBuffer(const class IndexBuffer& indexBuffer);
+
+		void SetFragmentTexture(uint32_t slot, const class Texture& texture);
+
+		void CreateDepthBuffer();
 
 		void Draw(uint32_t vertexCount);
 		void DrawIndex(const class IndexBuffer& indexBuffer);
@@ -69,6 +70,8 @@ namespace sr
 		SDL_GPUDevice* m_gpuDevice = nullptr;
 		SDL_GPUCommandBuffer* m_cmdBuf = nullptr;
 		SDL_GPURenderPass* m_renderPass = nullptr;
+
+		SDL_GPUTexture* m_depthTexture = nullptr;
 
 		Vector2 m_camera;
 		bool m_camActive = true;

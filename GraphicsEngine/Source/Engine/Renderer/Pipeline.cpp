@@ -46,15 +46,21 @@ namespace sr
 			// controls how triangles are turned into pixels
 			.rasterizer_state = SDL_GPURasterizerState{
 				.fill_mode = SDL_GPU_FILLMODE_FILL, // todo: fill the triangles solid (SDL_GPU_FILLMODE_...)
-				.cull_mode = SDL_GPU_CULLMODE_NONE, // todo: skip drawing back-facing triangles (SDL_GPU_CULLMODE_...)
+				.cull_mode = SDL_GPU_CULLMODE_BACK, // todo: skip drawing back-facing triangles (SDL_GPU_CULLMODE_...)
 				.front_face = SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE // todo: front faces have counter clockwise winding (SDL_GPU_FRONTFACE_...)
 			},
-
+			.depth_stencil_state = SDL_GPUDepthStencilState{
+				.compare_op = SDL_GPU_COMPAREOP_LESS,
+				.enable_depth_test = true,
+				.enable_depth_write = true
+			},
 			// the render targets this pipeline draws into, uses the color target array from above
 			.target_info = SDL_GPUGraphicsPipelineTargetInfo{
-				.color_target_descriptions = colorTargetDescriptions.data(), // todo: pointer to colorTargetDescriptions
-				.num_color_targets = colorTargetDescriptions.size() // todo: number of color targets
-			}
+				.color_target_descriptions = colorTargetDescriptions.data(),
+				.num_color_targets = colorTargetDescriptions.size(),
+				.depth_stencil_format = SDL_GPU_TEXTUREFORMAT_D32_FLOAT,
+				.has_depth_stencil_target = true
+			} 
 		};
 
 		// create the pipeline with SDL_CreateGPUGraphicsPipeline(device, &createInfo) and store it in m_gpuPipeline
@@ -67,37 +73,37 @@ namespace sr
 		}
 		// pipeline created successfully
 		return true;
+		}
+
+			void Pipeline::AddVertexBuffer(uint32_t pitch)
+		{
+			// describe one vertex buffer the pipeline will read from
+			SDL_GPUVertexBufferDescription description{
+				.slot = (uint32_t)m_vertexBufferDescriptions.size(), // todo: the index of this buffer, use the current size of m_vertexBufferDescriptions
+				.pitch = pitch, // todo: the size in bytes of one vertex (the pitch parameter)
+				.input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX, // advance to the next vertex for each vertex drawn
+				.instance_step_rate = 0 // only used for instancing
+			};
+
+			// add the description to m_vertexBufferDescriptions
+			m_vertexBufferDescriptions.push_back(description);
+		}
+
+		void Pipeline::AddVertexAttribute(uint32_t location, SDL_GPUVertexElementFormat format, uint32_t offset)
+		{
+			// describe one attribute of a vertex (ex. position, color, uv)
+			SDL_GPUVertexAttribute attribute{
+				.location = location, // todo: matches layout(location = x) in the vertex shader
+				.buffer_slot = 0, // all attributes read from the first vertex buffer
+				.format = format, // todo: the data type of the attribute (ex. SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3)
+				.offset = offset // todo: the byte offset of this attribute inside one vertex
+			};
+
+			// add the attribute to m_vertexAttributes
+			m_vertexAttributes.push_back(attribute);
+		}
+		//void Pipeline::AddIndexBuffer()
+		//{
+
+		//}
 	}
-
-	void Pipeline::AddVertexBuffer(uint32_t pitch)
-	{
-		// describe one vertex buffer the pipeline will read from
-		SDL_GPUVertexBufferDescription description{
-			.slot = (uint32_t)m_vertexBufferDescriptions.size(), // todo: the index of this buffer, use the current size of m_vertexBufferDescriptions
-			.pitch = pitch, // todo: the size in bytes of one vertex (the pitch parameter)
-			.input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX, // advance to the next vertex for each vertex drawn
-			.instance_step_rate = 0 // only used for instancing
-		};
-
-		// add the description to m_vertexBufferDescriptions
-		m_vertexBufferDescriptions.push_back(description);
-	}
-
-	void Pipeline::AddVertexAttribute(uint32_t location, SDL_GPUVertexElementFormat format, uint32_t offset)
-	{
-		// describe one attribute of a vertex (ex. position, color, uv)
-		SDL_GPUVertexAttribute attribute{
-			.location = location, // todo: matches layout(location = x) in the vertex shader
-			.buffer_slot = 0, // all attributes read from the first vertex buffer
-			.format = format, // todo: the data type of the attribute (ex. SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3)
-			.offset = offset // todo: the byte offset of this attribute inside one vertex
-		};
-
-		// add the attribute to m_vertexAttributes
-		m_vertexAttributes.push_back(attribute);
-	}
-	//void Pipeline::AddIndexBuffer()
-	//{
-
-	//}
-}
