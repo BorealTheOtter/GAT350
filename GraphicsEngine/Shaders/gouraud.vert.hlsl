@@ -47,7 +47,7 @@ Output main(Input input)
             L = normalize(-light.dir);
             break;
         case LIGHT_POINT:
-            L = -1 * normalize(light.pos - worldPos); //did the -1 multiplication as a quick fix
+            L = normalize(light.pos - worldPos); //did the -1 multiplication as a quick fix
             break;
     };
     
