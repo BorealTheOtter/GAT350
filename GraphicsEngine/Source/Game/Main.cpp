@@ -15,8 +15,27 @@
 
 using namespace sr;
 
-struct vertexUniform {
+//UNIFORMS
+struct VertexUniform {
     glm::mat4 mvp;
+    glm::mat4 model;
+};
+VertexUniform vertexUniform;
+
+struct LightUniform {
+    glm::vec3 lightDir;
+    float padding1;
+
+    glm::vec4 lightColor;
+
+    glm::vec3 ambient;
+    float padding2;
+};
+
+LightUniform lightUniform{
+    .lightDir {-1,1,0},
+    .lightColor {1.0, 0.85, 0.60, 0.8},
+    .ambient {0.2f}
 };
 
 struct Color4 {
@@ -28,7 +47,6 @@ struct Vertex
     Color4 color;
 };
 
-vertexUniform uniform;
 glm::vec3 cameraPos{ 0,0,5 };
 
 Transform transform;
@@ -40,18 +58,12 @@ int main()
     //INITIALIZE
     Engine::Get().Initialize();
 
-    //auto vb = std::make_shared<VertexBuffer>();
-    //vb->Create<Vertex>(vertices, Engine::Get().GetRenderer());
+    auto model = Resources().Get<Model>("Models/Mayu.obj", Engine::Get().GetRenderer());
+    auto texture1 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1001.png", Engine::Get().GetRenderer());
+    auto texture2 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1002.png", Engine::Get().GetRenderer());
 
-    //auto ib = std::make_shared<IndexBuffer>();
-    //ib->Create(indices, Engine::Get().GetRenderer());
-
-    auto model = Resources().Get<Model>("Models/Mayu 3.6.0.obj", Engine::Get().GetRenderer());
-    auto texture1 = Resources().Get<Texture>("Textures/TORA_base_color_1001.png", Engine::Get().GetRenderer());
-    auto texture2 = Resources().Get<Texture>("Textures/TORA_base_color_1002.png", Engine::Get().GetRenderer());
-
-    auto vshader = Resources().Get<sr::Shader>("shaders/lit.vert", Engine::Get().GetRenderer(), 1);
-    auto fshader = Resources().Get<sr::Shader>("shaders/lit.frag", Engine::Get().GetRenderer(), 1, 1);
+    auto vshader = Resources().Get<sr::Shader>("shaders/gouraud.vert", Engine::Get().GetRenderer(), 2);
+    auto fshader = Resources().Get<sr::Shader>("shaders/gouraud.frag", Engine::Get().GetRenderer(), 1, 1);
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -63,8 +75,6 @@ int main()
 
     float scale = 0.5f;
     Color4 tint = { 1,1,1,1 };
-
-    vertexUniform uniform;
 
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Get().GetRenderer().GetGPUDevice(),
@@ -109,13 +119,15 @@ int main()
         float aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
         auto projection = glm::perspectiveRH(glm::radians(45.0f), aspectRatio, 0.01f, 20.0f);
 
-        uniform.mvp = projection * view * transform.GetMatrix();
+        vertexUniform.model = transform.GetMatrix();
+        vertexUniform.mvp = projection * view * vertexUniform.model;
             
         //RENDER
         Engine::Get().GetRenderer().BeginFrame();
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
-        Engine::Get().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
+        Engine::Get().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
+        Engine::Get().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Get().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
 
         Engine::Get().GetRenderer().SetFragmentTexture(0, *texture1);
