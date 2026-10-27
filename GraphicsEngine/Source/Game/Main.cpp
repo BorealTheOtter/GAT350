@@ -35,31 +35,35 @@ struct LightUniform {
     glm::vec3 pos;
     LightType type;
     glm::vec3 dir;
-    float padding2;
+    float innerCutoff;
     glm::vec4 color;
     glm::vec3 ambient;
-    float padding3;
+    float outerCutoff;
 };
 
 LightUniform lightUniform{
     .pos {10, 10, 10},
     .type {LightType::Point},
     .dir {-1,1,0},
+    .innerCutoff{0.3},
     .color {1.0, 0.85, 0.60, 0.8},
-    .ambient {0.2f}
+    .ambient {0.2f},
+    .outerCutoff{0.6}
 };
 
 struct MatUniform
 {
+    glm::vec4 color;
     glm::vec2 tiling;
     glm::vec2 offset;
     float shine;
 };
 
 MatUniform matUniform{
+    .color{1,1,1,1},
     .tiling {1,1},
     .offset {0,0},
-    .shine {64}
+    .shine {63}
 };
 
 struct Color4 {
@@ -96,7 +100,6 @@ int main()
     pipeline->AddVertexAttribute(3, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, tangent));
 
     float scale = 0.5f;
-    Color4 tint = { 1,1,1,1 };
 
     vertexUniform.camPos = { 0,1,5 };
 
@@ -132,8 +135,19 @@ int main()
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E)) dir.z -= 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_Q)) dir.z += 4;
 
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) lightUniform.type = LightType::Directional;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2)) lightUniform.type = LightType::Point;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) {
+            lightUniform.type = LightType::Directional;
+            lightUniform.dir = { -1,1,0 };
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2)) {
+            lightUniform.type = LightType::Point;
+            lightUniform.pos = glm::vec3(10, 10, 10);
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_3)) {
+            lightUniform.type = LightType::Spot;
+            lightUniform.pos = glm::vec3(0, 10, 0);
+            lightUniform.dir = glm::vec3(0, 1, 0);
+        }
 
         vertexUniform.camPos += dir * dt;
 
@@ -158,7 +172,7 @@ int main()
         Engine::Get().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Get().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Get().GetRenderer().SetVertexUniform(2, &matUniform, sizeof(matUniform));
-        Engine::Get().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
+        Engine::Get().GetRenderer().SetFragmentUniform(0, &matUniform, sizeof(matUniform));
 
         Engine::Get().GetRenderer().SetFragmentTexture(0, *texture1);
 
