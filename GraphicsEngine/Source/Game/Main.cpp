@@ -53,11 +53,13 @@ struct MatUniform
 {
     glm::vec2 tiling;
     glm::vec2 offset;
+    float shine;
 };
 
 MatUniform matUniform{
     .tiling {1,1},
-    .offset {0,0}
+    .offset {0,0},
+    .shine {64}
 };
 
 struct Color4 {
@@ -137,7 +139,7 @@ int main()
 
         //matUniform.offset.x = time * 0.2;
 
-        //transform.rot.x = time * 90;
+        transform.rot.x = time * 90;
 
         //View Matrix
         auto view = glm::lookAtRH(vertexUniform.camPos, vertexUniform.camPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
