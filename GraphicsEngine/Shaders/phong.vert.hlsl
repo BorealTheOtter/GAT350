@@ -27,8 +27,8 @@ struct Output
 {
     float4 position : SV_Position;
     float2 texcoord : TEXCOORD0;
-    float3 diffuse : TEXCOORD1;
-    float3 specular : TEXCOORD2;
+    float3 worldPos : TEXCOORD1;
+    float3 normal : TEXCOORD2;
 };
 
 Output main(Input input)
@@ -37,33 +37,11 @@ Output main(Input input)
     output.texcoord = (input.texcoord * material.tiling) + material.offset;
     output.position = mul(mvp, float4(input.position, 1.0f));
     
-    float3 worldPos = mul(model, float4(input.position, 1.0f)).xyz;
-    float3 radiance = light.color.rgb * light.color.a;
+    output.worldPos = mul(model, float4(input.position, 1.0f)).xyz;
+    output.normal = normalize(mul((float3x3) model, input.normal));
+    
     float attenuation;
-    float3 L = getLightVector(light, worldPos, attenuation);
-    float3 N = normalize(mul((float3x3) model, input.normal));
-    
-    //DIFFUSE
-    
+    float3 L = getLightVector(light, output.worldPos, attenuation);
 
-    
-    float NdotL = saturate(dot(N, L));
-    
-    float3 diffuse = radiance * NdotL * attenuation;
-    
-    output.diffuse = diffuse + light.ambient;
-    
-    //SPECULAR
-    output.specular = 0;
-    if (NdotL > 0)
-    {
-        //Blinn-Phong Specular
-        float3 V = normalize(camPos - worldPos);
-        float3 H = normalize(V + L);
-        float HdotN = saturate(dot(H, N));
-        output.specular = pow(HdotN, material.shine) * radiance * attenuation;
-    }
-    
-    
     return output;
 }

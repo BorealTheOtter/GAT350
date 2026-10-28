@@ -12,6 +12,7 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/transform.hpp>
 
+#define CHECK_UNIFORM_BOUND(T) static_assert((sizeof(T) % 16) == 0);
 
 using namespace sr;
 
@@ -28,42 +29,58 @@ struct VertexUniform {
     glm::vec3 camPos;
     float padding1;
 };
+
+CHECK_UNIFORM_BOUND(VertexUniform)
+
 VertexUniform vertexUniform;
 
 struct LightUniform {
 
     glm::vec3 pos;
     LightType type;
+
     glm::vec3 dir;
-    float innerCutoff;
+    float range;
+
     glm::vec4 color;
+
     glm::vec3 ambient;
+    float innerCutoff;
+
     float outerCutoff;
+    glm::vec3 padding;
 };
 
 LightUniform lightUniform{
     .pos {10, 10, 10},
     .type {LightType::Point},
     .dir {-1,1,0},
-    .innerCutoff{0.3},
+    .range{40},
     .color {1.0, 0.85, 0.60, 0.8},
     .ambient {0.2f},
-    .outerCutoff{0.6}
+    .innerCutoff{10},
+    .outerCutoff{15}
 };
+
+CHECK_UNIFORM_BOUND(LightUniform)
 
 struct MatUniform
 {
     glm::vec4 color;
+
     glm::vec2 tiling;
     glm::vec2 offset;
+
     float shine;
+    glm::vec3 padding;
 };
+CHECK_UNIFORM_BOUND(MatUniform)
 
 MatUniform matUniform{
     .color{1,1,1,1},
     .tiling {1,1},
     .offset {0,0},
-    .shine {63}
+    .shine {-10}
 };
 
 struct Color4 {
@@ -88,8 +105,8 @@ int main()
     auto texture1 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1001.png", Engine::Get().GetRenderer());
     auto texture2 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1002.png", Engine::Get().GetRenderer());
 
-    auto vshader = Resources().Get<sr::Shader>("shaders/gouraud.vert", Engine::Get().GetRenderer(), 3);
-    auto fshader = Resources().Get<sr::Shader>("shaders/gouraud.frag", Engine::Get().GetRenderer(), 1, 1);
+    auto vshader = Resources().Get<sr::Shader>("shaders/phong.vert", Engine::Get().GetRenderer(), 3);
+    auto fshader = Resources().Get<sr::Shader>("shaders/phong.frag", Engine::Get().GetRenderer(), 3, 1);
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -128,12 +145,21 @@ int main()
         float time = Engine::Get().GetTime().GetTime();
 
         glm::vec3 dir{ 0 };
+        glm::vec3 rot{ 0 };
+
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) dir.y += 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) dir.x -= 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) dir.y -= 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) dir.x += 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E)) dir.z -= 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_Q)) dir.z += 4;
+
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_I)) rot.y += 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_J)) rot.x -= 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_K)) rot.y -= 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_L)) rot.x += 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_O)) rot.z -= 4;
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) rot.z += 4;
 
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) {
             lightUniform.type = LightType::Directional;
@@ -150,6 +176,7 @@ int main()
         }
 
         vertexUniform.camPos += dir * dt;
+        
 
         //matUniform.offset.x = time * 0.2;
 
@@ -172,7 +199,11 @@ int main()
         Engine::Get().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Get().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Get().GetRenderer().SetVertexUniform(2, &matUniform, sizeof(matUniform));
-        Engine::Get().GetRenderer().SetFragmentUniform(0, &matUniform, sizeof(matUniform));
+
+        Engine::Get().GetRenderer().SetFragmentUniform(0, &vertexUniform, sizeof(vertexUniform));
+        Engine::Get().GetRenderer().SetFragmentUniform(1, &lightUniform, sizeof(lightUniform));
+        Engine::Get().GetRenderer().SetFragmentUniform(2, &matUniform, sizeof(matUniform));
+
 
         Engine::Get().GetRenderer().SetFragmentTexture(0, *texture1);
 

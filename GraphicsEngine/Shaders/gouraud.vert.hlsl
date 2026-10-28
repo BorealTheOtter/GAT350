@@ -38,32 +38,13 @@ Output main(Input input)
     output.position = mul(mvp, float4(input.position, 1.0f));
     
     float3 worldPos = mul(model, float4(input.position, 1.0f)).xyz;
-    float3 radiance = light.color.rgb * light.color.a;
+    float3 N = normalize(mul((float3x3) model, input.normal));
+    float3 V = normalize(camPos - worldPos);
+    
     float attenuation;
     float3 L = getLightVector(light, worldPos, attenuation);
-    float3 N = normalize(mul((float3x3) model, input.normal));
     
-    //DIFFUSE
-    
+    calculateLighting(light, material, worldPos, N, V, output.diffuse, output.specular);
 
-    
-    float NdotL = saturate(dot(N, L));
-    
-    float3 diffuse = radiance * NdotL * attenuation;
-    
-    output.diffuse = diffuse + light.ambient;
-    
-    //SPECULAR
-    output.specular = 0;
-    if (NdotL > 0)
-    {
-        //Blinn-Phong Specular
-        float3 V = normalize(camPos - worldPos);
-        float3 H = normalize(V + L);
-        float HdotN = saturate(dot(H, N));
-        output.specular = pow(HdotN, material.shine) * radiance * attenuation;
-    }
-    
-    
     return output;
 }
