@@ -13,6 +13,7 @@
 #include <glm/gtx/transform.hpp>
 
 #define CHECK_UNIFORM_BOUND(T) static_assert((sizeof(T) % 16) == 0);
+#define MAX_LIGHTS 8
 
 using namespace sr;
 
@@ -34,8 +35,7 @@ CHECK_UNIFORM_BOUND(VertexUniform)
 
 VertexUniform vertexUniform;
 
-struct LightUniform {
-
+struct Light {
     glm::vec3 pos;
     LightType type;
 
@@ -50,17 +50,41 @@ struct LightUniform {
     float outerCutoff;
     glm::vec3 padding;
 };
+CHECK_UNIFORM_BOUND(Light)
 
-LightUniform lightUniform{
+Light light1{
     .pos {10, 10, 10},
     .type {LightType::Point},
     .dir {-1,1,0},
     .range{40},
-    .color {1.0, 0.85, 0.60, 0.8},
+    //.color {1.0, 0.85, 0.60, 0.8}
+    .color {1.0, 0, 0, 0.8},
     .ambient {0.2f},
     .innerCutoff{10},
     .outerCutoff{15}
 };
+
+Light light2{
+    .pos {-10, 10, 10},
+    .type {LightType::Point},
+    .dir {1,1,0},
+    .range{40},
+    .color {0.0, 0.0, 1.0, 0.8},
+    .ambient {0.2f},
+    .innerCutoff{10},
+    .outerCutoff{15}
+};
+
+struct LightUniform {
+    Light lights[MAX_LIGHTS];
+    glm::vec3 ambient;
+    uint32_t numLights;
+};
+
+LightUniform lightUniform;
+
+
+
 
 CHECK_UNIFORM_BOUND(LightUniform)
 
@@ -80,7 +104,7 @@ MatUniform matUniform{
     .color{1,1,1,1},
     .tiling {1,1},
     .offset {0,0},
-    .shine {-10}
+    .shine {64}
 };
 
 struct Color4 {
@@ -97,6 +121,11 @@ Transform transform;
 int main()
 {
     SetWorkingDirectory("Assets");
+
+    lightUniform.lights[0] = light1;
+    lightUniform.lights[1] = light2;
+    lightUniform.numLights = 2;
+    lightUniform.ambient = glm::vec3(0.5, 0.425, 0.30);
 
     //INITIALIZE
     Engine::Get().Initialize();
@@ -162,32 +191,37 @@ int main()
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) rot.z += 4;
 
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) {
-            lightUniform.type = LightType::Directional;
-            lightUniform.dir = { -1,1,0 };
+            lightUniform.lights[0].type = LightType::Directional;
+            lightUniform.lights[0].dir = { -1,1,0 };
         }
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2)) {
-            lightUniform.type = LightType::Point;
-            lightUniform.pos = glm::vec3(10, 10, 10);
+            lightUniform.lights[0].type = LightType::Point;
+            lightUniform.lights[0].pos = glm::vec3(10, 10, 10);
         }
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_3)) {
-            lightUniform.type = LightType::Spot;
-            lightUniform.pos = glm::vec3(0, 10, 0);
-            lightUniform.dir = glm::vec3(0, 1, 0);
+            lightUniform.lights[0].type = LightType::Spot;
+            lightUniform.lights[0].pos = glm::vec3(0, 15, 0);
+            lightUniform.lights[0].dir = glm::vec3(0, 1, 0);
+            lightUniform.lights[0].innerCutoff = glm::cos(glm::radians(15.0));
+            lightUniform.lights[0].outerCutoff = glm::cos(glm::radians(5.0));
         }
 
         vertexUniform.camPos += dir * dt;
+
+        lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
+        lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
         
 
         //matUniform.offset.x = time * 0.2;
-
-        transform.rot.x = time * 90;
+        //transform.scale = glm::vec3(4);
+        //transform.rot.x = time * 90;
 
         //View Matrix
         auto view = glm::lookAtRH(vertexUniform.camPos, vertexUniform.camPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
 
         //projection matrix
         float aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
-        auto projection = glm::perspectiveRH(glm::radians(45.0f), aspectRatio, 0.01f, 20.0f);
+        auto projection = glm::perspectiveRH(glm::radians(45.0f), aspectRatio, 0.01f, 200.0f);
 
         vertexUniform.model = transform.GetMatrix();
         vertexUniform.mvp = projection * view * vertexUniform.model;

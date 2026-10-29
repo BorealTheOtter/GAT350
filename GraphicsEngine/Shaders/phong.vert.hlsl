@@ -9,8 +9,11 @@ cbuffer VertexUniforms : register(b0, space1)
 };
 cbuffer LightUniforms : register(b1, space1)
 {
-    Light light;
+    Light light[8];
+    float3 ambient;
+    uint numLights;
 };
+
 cbuffer MatUniforms : register(b2, space1)
 {
     Material material;
@@ -39,9 +42,6 @@ Output main(Input input)
     
     output.worldPos = mul(model, float4(input.position, 1.0f)).xyz;
     output.normal = normalize(mul((float3x3) model, input.normal));
-    
-    float attenuation;
-    float3 L = getLightVector(light, output.worldPos, attenuation);
 
     return output;
 }
