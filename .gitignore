@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+#3d model .obj files, allow them
+!GraphicsEngine/Build/Assets/**/*.obj
