@@ -9,7 +9,9 @@ cbuffer VertexUniforms : register(b0, space1)
 };
 cbuffer LightUniforms : register(b1, space1)
 {
-    Light light;
+    Light light[8];
+    float3 ambient;
+    uint numLights;
 };
 cbuffer MatUniforms : register(b2, space1)
 {
@@ -42,9 +44,13 @@ Output main(Input input)
     float3 V = normalize(camPos - worldPos);
     
     float attenuation;
-    float3 L = getLightVector(light, worldPos, attenuation);
+    float3 diffuse = ambient;
+    float3 specular = 0;
     
-    calculateLighting(light, material, worldPos, N, V, output.diffuse, output.specular);
+    for (uint i = 0; i < numLights; i++)
+    {
+        calculateLighting(light[i], material, worldPos, normalize(input.normal), V, diffuse, specular);
+    };
 
     return output;
 }

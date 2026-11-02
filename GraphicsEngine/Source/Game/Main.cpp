@@ -57,23 +57,23 @@ Light light1{
     .type {LightType::Point},
     .dir {-1,1,0},
     .range{40},
-    //.color {1.0, 0.85, 0.60, 0.8}
-    .color {1.0, 0, 0, 0.8},
+    .color {1.0, 0.85, 0.60, 0.8},
+    //.color {1.0, 0, 0, 0.8},
     .ambient {0.2f},
     .innerCutoff{10},
     .outerCutoff{15}
 };
 
-Light light2{
-    .pos {-10, 10, 10},
-    .type {LightType::Point},
-    .dir {1,1,0},
-    .range{40},
-    .color {0.0, 0.0, 1.0, 0.8},
-    .ambient {0.2f},
-    .innerCutoff{10},
-    .outerCutoff{15}
-};
+//Light light2{
+//    .pos {-10, 10, 10},
+//    .type {LightType::Point},
+//    .dir {1,1,0},
+//    .range{40},
+//    .color {0.0, 0.0, 1.0, 0.8},
+//    .ambient {0.2f},
+//    .innerCutoff{10},
+//    .outerCutoff{15}
+//};
 
 struct LightUniform {
     Light lights[MAX_LIGHTS];
@@ -123,7 +123,7 @@ int main()
     SetWorkingDirectory("Assets");
 
     lightUniform.lights[0] = light1;
-    lightUniform.lights[1] = light2;
+    //lightUniform.lights[1] = light2;
     lightUniform.numLights = 2;
     lightUniform.ambient = glm::vec3(0.5, 0.425, 0.30);
 
@@ -183,20 +183,13 @@ int main()
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E)) dir.z -= 4;
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_Q)) dir.z += 4;
 
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_I)) rot.y += 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_J)) rot.x -= 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_K)) rot.y -= 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_L)) rot.x += 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_O)) rot.z -= 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) rot.z += 4;
-
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) {
             lightUniform.lights[0].type = LightType::Directional;
             lightUniform.lights[0].dir = { -1,1,0 };
         }
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2)) {
             lightUniform.lights[0].type = LightType::Point;
-            lightUniform.lights[0].pos = glm::vec3(10, 10, 10);
+            lightUniform.lights[0].pos = glm::vec3(-3, 7, 2);
         }
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_3)) {
             lightUniform.lights[0].type = LightType::Spot;
@@ -205,11 +198,29 @@ int main()
             lightUniform.lights[0].innerCutoff = glm::cos(glm::radians(15.0));
             lightUniform.lights[0].outerCutoff = glm::cos(glm::radians(5.0));
         }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_I)) {
+            lightUniform.lights[0].pos += glm::vec3{0,0.1,0};
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_K)) {
+            lightUniform.lights[0].pos -= glm::vec3{ 0,0.1,0 };
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_J)) {
+            lightUniform.lights[0].pos -= glm::vec3{0.1,0,0};
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_L)) {
+            lightUniform.lights[0].pos += glm::vec3{0.1,0,0 };
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_O)) {
+            lightUniform.lights[0].pos += glm::vec3{0,0,0.1};
+        }
+        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) {
+            lightUniform.lights[0].pos -= glm::vec3{ 0,0,0.1 };
+        }
 
         vertexUniform.camPos += dir * dt;
 
-        lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
-        lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
+        //lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
+        //lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
         
 
         //matUniform.offset.x = time * 0.2;
