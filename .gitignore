@@ -364,3 +364,14 @@ FodyWeavers.xsd
 
 #3d model .obj files, allow them
 !GraphicsEngine/Build/Assets/**/*.obj
+
+# third-party libraries: un-ignore build-style folder names inside ThirdParty
+!GraphicsEngine/ThirdParty/**/[Bb]in/
+!GraphicsEngine/ThirdParty/**/[Ll]ib/
+!GraphicsEngine/ThirdParty/**/x64/
+!GraphicsEngine/ThirdParty/**/x86/
+!GraphicsEngine/ThirdParty/**/[Dd]ebug/
+!GraphicsEngine/ThirdParty/**/[Rr]elease/
+!GraphicsEngine/ThirdParty/**/*.lib
+!GraphicsEngine/ThirdParty/**/*.dll
+!GraphicsEngine/ThirdParty/**/*.pdb
