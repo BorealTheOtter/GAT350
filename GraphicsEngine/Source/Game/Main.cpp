@@ -142,6 +142,9 @@ int main()
     //INITIALIZE
     Engine::Get().Initialize();
 
+    Scene scene;
+    scene.Load("Scenes/scene.json");
+
     auto model = Resources().Get<Model>("Models/Mayu.obj", Engine::Get().GetRenderer());
     auto texture1 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1001.png", Engine::Get().GetRenderer());
     auto texture2 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1002.png", Engine::Get().GetRenderer());
