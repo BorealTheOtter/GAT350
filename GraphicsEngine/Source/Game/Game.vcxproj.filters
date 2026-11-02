@@ -8,10 +8,18 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{af5219e3-9e5a-4595-befb-2fbcfb2e715f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{94b24dc4-1087-4276-af1d-e27386c055b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Build\Assets\Scenes\scene.json">
+      <Filter>Scenes</Filter>
+    </None>
   </ItemGroup>
 </Project>
