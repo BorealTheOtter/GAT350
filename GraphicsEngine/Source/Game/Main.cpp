@@ -54,26 +54,37 @@ CHECK_UNIFORM_BOUND(Light)
 
 Light light1{
     .pos {10, 10, 10},
-    .type {LightType::Point},
+    .type {LightType::Directional},
     .dir {-1,1,0},
     .range{40},
-    .color {1.0, 0.85, 0.60, 0.8},
-    //.color {1.0, 0, 0, 0.8},
+    //.color {1.0, 0.85, 0.60, 0.8},
+    .color {1.0, 0, 0, 0.8},
     .ambient {0.2f},
     .innerCutoff{10},
     .outerCutoff{15}
 };
 
-//Light light2{
-//    .pos {-10, 10, 10},
-//    .type {LightType::Point},
-//    .dir {1,1,0},
-//    .range{40},
-//    .color {0.0, 0.0, 1.0, 0.8},
-//    .ambient {0.2f},
-//    .innerCutoff{10},
-//    .outerCutoff{15}
-//};
+Light light2{
+    .pos {-10, 10, 5},
+    .type {LightType::Point},
+    .dir {1,1,0},
+    .range{40},
+    .color {0.0, 0.0, 1.0, 0.8},
+    .ambient {0.2f},
+    .innerCutoff{10},
+    .outerCutoff{15}
+};
+
+Light light3{
+    .pos {-10, -10, 15},
+    .type {LightType::Point},
+    .dir {1,1,0},
+    .range{40},
+    .color {0.0, 1.0, 0.0, 0.8},
+    .ambient {0.2f},
+    .innerCutoff{10},
+    .outerCutoff{15}
+};
 
 struct LightUniform {
     Light lights[MAX_LIGHTS];
@@ -123,8 +134,9 @@ int main()
     SetWorkingDirectory("Assets");
 
     lightUniform.lights[0] = light1;
-    //lightUniform.lights[1] = light2;
-    lightUniform.numLights = 2;
+    lightUniform.lights[1] = light2;
+    lightUniform.lights[2] = light3;
+    lightUniform.numLights = 3;
     lightUniform.ambient = glm::vec3(0.5, 0.425, 0.30);
 
     //INITIALIZE
@@ -133,6 +145,9 @@ int main()
     auto model = Resources().Get<Model>("Models/Mayu.obj", Engine::Get().GetRenderer());
     auto texture1 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1001.png", Engine::Get().GetRenderer());
     auto texture2 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1002.png", Engine::Get().GetRenderer());
+
+    //auto vshader = Resources().Get<sr::Shader>("shaders/gouraud.vert", Engine::Get().GetRenderer(), 3);
+    //auto fshader = Resources().Get<sr::Shader>("shaders/gouraud.frag", Engine::Get().GetRenderer(), 1, 1);
 
     auto vshader = Resources().Get<sr::Shader>("shaders/phong.vert", Engine::Get().GetRenderer(), 3);
     auto fshader = Resources().Get<sr::Shader>("shaders/phong.frag", Engine::Get().GetRenderer(), 3, 1);
@@ -219,8 +234,9 @@ int main()
 
         vertexUniform.camPos += dir * dt;
 
-        //lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
-        //lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
+        lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
+        lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
+        lightUniform.lights[2].pos = glm::eulerAngleZ(time * 0.3) * glm::vec4{ 0,0,10,1 };
         
 
         //matUniform.offset.x = time * 0.2;
@@ -241,10 +257,17 @@ int main()
         Engine::Get().GetRenderer().BeginFrame();
 
         Engine::Get().GetRenderer().SetPipeline(*pipeline);
+
+        //gouraud
+        //Engine::Get().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
+        //Engine::Get().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
+        //Engine::Get().GetRenderer().SetVertexUniform(2, &matUniform, sizeof(matUniform));
+        //Engine::Get().GetRenderer().SetFragmentUniform(0, &matUniform, sizeof(matUniform));
+
+        //phong
         Engine::Get().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Get().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Get().GetRenderer().SetVertexUniform(2, &matUniform, sizeof(matUniform));
-
         Engine::Get().GetRenderer().SetFragmentUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Get().GetRenderer().SetFragmentUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Get().GetRenderer().SetFragmentUniform(2, &matUniform, sizeof(matUniform));

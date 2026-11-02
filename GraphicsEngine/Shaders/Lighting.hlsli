@@ -4,7 +4,7 @@
 #define LIGHT_POINT         1
 #define LIGHT_SPOT          2
 
-const uint MAX_LIGHTS = 8;
+#define MAX_LIGHTS          8
 
 struct Material
 {
