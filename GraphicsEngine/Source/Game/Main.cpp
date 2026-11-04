@@ -4,6 +4,9 @@
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/Pipeline.h"
 #include "Renderer/Texture.h"
+
+#include "Framework/Scene.h"
+#include "Components/CameraComponent.h"
 #include <memory>
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -57,34 +60,34 @@ Light light1{
     .type {LightType::Directional},
     .dir {-1,1,0},
     .range{40},
-    //.color {1.0, 0.85, 0.60, 0.8},
-    .color {1.0, 0, 0, 0.8},
+    .color {1.0, 0.85, 0.60, 0.8},
+    //.color {1.0, 0, 0, 0.8},
     .ambient {0.2f},
     .innerCutoff{10},
     .outerCutoff{15}
 };
 
-Light light2{
-    .pos {-10, 10, 5},
-    .type {LightType::Point},
-    .dir {1,1,0},
-    .range{40},
-    .color {0.0, 0.0, 1.0, 0.8},
-    .ambient {0.2f},
-    .innerCutoff{10},
-    .outerCutoff{15}
-};
-
-Light light3{
-    .pos {-10, -10, 15},
-    .type {LightType::Point},
-    .dir {1,1,0},
-    .range{40},
-    .color {0.0, 1.0, 0.0, 0.8},
-    .ambient {0.2f},
-    .innerCutoff{10},
-    .outerCutoff{15}
-};
+//Light light2{
+//    .pos {-10, 10, 5},
+//    .type {LightType::Point},
+//    .dir {1,1,0},
+//    .range{40},
+//    .color {0.0, 0.0, 1.0, 0.8},
+//    .ambient {0.2f},
+//    .innerCutoff{10},
+//    .outerCutoff{15}
+//};
+//
+//Light light3{
+//    .pos {-10, -10, 15},
+//    .type {LightType::Point},
+//    .dir {1,1,0},
+//    .range{40},
+//    .color {0.0, 1.0, 0.0, 0.8},
+//    .ambient {0.2f},
+//    .innerCutoff{10},
+//    .outerCutoff{15}
+//};
 
 struct LightUniform {
     Light lights[MAX_LIGHTS];
@@ -134,9 +137,9 @@ int main()
     SetWorkingDirectory("Assets");
 
     lightUniform.lights[0] = light1;
-    lightUniform.lights[1] = light2;
-    lightUniform.lights[2] = light3;
-    lightUniform.numLights = 3;
+    //lightUniform.lights[1] = light2;
+    //lightUniform.lights[2] = light3;
+    lightUniform.numLights = 1;
     lightUniform.ambient = glm::vec3(0.5, 0.425, 0.30);
 
     //INITIALIZE
@@ -165,8 +168,6 @@ int main()
 
     float scale = 0.5f;
 
-    vertexUniform.camPos = { 0,1,5 };
-
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Get().GetRenderer().GetGPUDevice(),
         Engine::Get().GetRenderer().GetWindow());
@@ -188,18 +189,13 @@ int main()
 
         Engine::Get().Update();
 
+
         float dt = Engine::Get().GetTime().GetDeltaTime();
         float time = Engine::Get().GetTime().GetTime();
 
-        glm::vec3 dir{ 0 };
-        glm::vec3 rot{ 0 };
+        scene.Update(dt, Engine::Get().GetScreen().x, Engine::Get().GetScreen().y);
 
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) dir.y += 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) dir.x -= 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) dir.y -= 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) dir.x += 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E)) dir.z -= 4;
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_Q)) dir.z += 4;
+
 
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) {
             lightUniform.lights[0].type = LightType::Directional;
@@ -213,48 +209,32 @@ int main()
             lightUniform.lights[0].type = LightType::Spot;
             lightUniform.lights[0].pos = glm::vec3(0, 15, 0);
             lightUniform.lights[0].dir = glm::vec3(0, 1, 0);
-            lightUniform.lights[0].innerCutoff = glm::cos(glm::radians(15.0));
+            lightUniform.lights[0].innerCutoff = glm::cos(glm::radians(6.0));
             lightUniform.lights[0].outerCutoff = glm::cos(glm::radians(5.0));
         }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_I)) {
-            lightUniform.lights[0].pos += glm::vec3{0,0.1,0};
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_K)) {
-            lightUniform.lights[0].pos -= glm::vec3{ 0,0.1,0 };
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_J)) {
-            lightUniform.lights[0].pos -= glm::vec3{0.1,0,0};
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_L)) {
-            lightUniform.lights[0].pos += glm::vec3{0.1,0,0 };
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_O)) {
-            lightUniform.lights[0].pos += glm::vec3{0,0,0.1};
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) {
-            lightUniform.lights[0].pos -= glm::vec3{ 0,0,0.1 };
-        }
 
-        vertexUniform.camPos += dir * dt;
+        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_I)) lightUniform.lights[0].pos += glm::vec3{0,0.1,0};
+        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_K)) lightUniform.lights[0].pos -= glm::vec3{ 0,0.1,0 };
+        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_J)) lightUniform.lights[0].pos -= glm::vec3{0.1,0,0};
+        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_L)) lightUniform.lights[0].pos += glm::vec3{0.1,0,0 };
+        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_O)) lightUniform.lights[0].pos += glm::vec3{0,0,0.1};
+        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) lightUniform.lights[0].pos -= glm::vec3{ 0,0,0.1 };
 
-        lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
-        lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
-        lightUniform.lights[2].pos = glm::eulerAngleZ(time * 0.3) * glm::vec4{ 0,0,10,1 };
-        
+        //lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
+        //lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
+        //lightUniform.lights[2].pos = glm::eulerAngleZ(time * 0.3) * glm::vec4{ 0,0,10,1 };
 
         //matUniform.offset.x = time * 0.2;
         //transform.scale = glm::vec3(4);
         //transform.rot.x = time * 90;
 
-        //View Matrix
-        auto view = glm::lookAtRH(vertexUniform.camPos, vertexUniform.camPos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
+        auto camera = scene.GetActorByName<Actor>("Camera");
+        auto cameraComponent = camera->GetComponent<CameraComponent>();
 
-        //projection matrix
-        float aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
-        auto projection = glm::perspectiveRH(glm::radians(45.0f), aspectRatio, 0.01f, 200.0f);
+        vertexUniform.camPos = camera->GetTransform().pos;
 
         vertexUniform.model = transform.GetMatrix();
-        vertexUniform.mvp = projection * view * vertexUniform.model;
+        vertexUniform.mvp = cameraComponent->GetProjection() * cameraComponent->GetView()* vertexUniform.model;
             
         //RENDER
         Engine::Get().GetRenderer().BeginFrame();

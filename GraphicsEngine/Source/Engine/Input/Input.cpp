@@ -30,6 +30,7 @@ namespace sr {
 
 		//mouse
 		m_prevButtonStates = m_buttonStates;
+		m_prevMousePos = m_mousePos;
 		m_buttonStates = SDL_GetMouseState(&m_mousePos.x, &m_mousePos.y);
 
 	}

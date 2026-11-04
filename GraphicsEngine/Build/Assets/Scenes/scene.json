@@ -7,16 +7,20 @@
       "prototype": false,
       "transform": {
         "pos": [ 0, 0, 5 ],
-        "rot": [ 0.0, 0.0, 0.0 ],
+        "rot": [ 0.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "active": true,
       "components": [
         {
           "type": "CameraComponent",
-          "fov": 70.0,
+          "fov": 70,
           "nearPlane": 0.001,
           "farPlane": 300
+        },
+        {
+          "type": "CameraController",
+          "speed": 3
         }
       ]
     }

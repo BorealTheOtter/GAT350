@@ -8,11 +8,16 @@ namespace sr
 {
 	FACTORY_REGISTER(CameraComponent)
 
-		void CameraComponent::Update(float dt)
+	void CameraComponent::Start()
 	{
-		m_view = glm::lookAtRH(GetOwner()->GetTransform().pos, GetOwner()->GetTransform().pos + glm::vec3{ 0,0,-1 }, glm::vec3{ 0,1,0 });
+		aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
+	}
 
-		float aspectRatio = (float)Engine::Get().GetRenderer().GetWidth() / (float)Engine::Get().GetRenderer().GetHeight();
+	void CameraComponent::Update(float dt)
+	{
+		m_view = glm::lookAtRH(GetOwner()->GetTransform().pos, GetOwner()->GetTransform().pos + GetOwner()->GetTransform().Forward(), glm::vec3{0,1,0});
+
+		
 		m_projection = glm::perspectiveRH(glm::radians(fov), aspectRatio, nearPlane, farPlane);
 	}
 

@@ -41,5 +41,7 @@ namespace sr::json
 	bool Read(const value_t& value, const std::string& name, Vector2& data, bool req = false);
 	bool Read(const value_t& value, const std::string& name, Vector3& data, bool req = false);
 
+	bool Read(const value_t& value, const std::string& name, glm::vec2& data, bool req = false);
 	bool Read(const value_t& value, const std::string& name, glm::vec3& data, bool req = false);
+	bool Read(const value_t& value, const std::string& name, glm::vec4& data, bool req = false);
 }
