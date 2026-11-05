@@ -64,14 +64,6 @@ namespace sr
 		SDL_RenderClear(m_renderer);
 	}
 
-    void Renderer::DrawPoint(float x, float y) const
-    {
-        float cameraX = (m_camActive) ? m_camera.x : 0;
-        float cameraY = (m_camActive) ? m_camera.y : 0;
-
-        SDL_RenderPoint(m_renderer, x - (cameraX - m_width * 0.5f), y - (cameraY - m_height * 0.5f));
-    }
-
     void Renderer::DrawFillRect(float x, float y, float width, float height) const
     {
         SDL_FRect rect{ x, y, width, height };
@@ -162,14 +154,14 @@ namespace sr
         SDL_BindGPUGraphicsPipeline(m_renderPass, pipeline.m_gpuPipeline);
     }
 
-    void Renderer::SetVertexBuffer(const VertexBuffer& vertexBuffer)
+    void Renderer::SetVertexBuffer(const VertexBuffer& vertexBuffer) const
     {
         SDL_GPUBufferBinding binding{.buffer = vertexBuffer.m_gpuBuffer,.offset = 0};
 
         SDL_BindGPUVertexBuffers(m_renderPass, 0, &binding, 1);
     }
 
-    void Renderer::SetIndexBuffer(const IndexBuffer& indexBuffer)
+    void Renderer::SetIndexBuffer(const IndexBuffer& indexBuffer) const
     {
         SDL_GPUBufferBinding binding{ .buffer = indexBuffer.m_gpuBuffer,.offset = 0 };
 
@@ -186,14 +178,14 @@ namespace sr
         SDL_DrawGPUIndexedPrimitives(m_renderPass, indexBuffer.GetIndexCount(), 1, 0, 0, 0);
     }
 
-    void Renderer::SetVertexUniform(uint32_t slot, const void* data, uint32_t size)
+    void Renderer::SetVertexUniform(UniformSlot slot, const void* data, uint32_t size) const
     {
-        SDL_PushGPUVertexUniformData(m_cmdBuf, slot, data, size);
+        SDL_PushGPUVertexUniformData(m_cmdBuf, (uint32_t)slot, data, size);
     }
 
-    void Renderer::SetFragmentUniform(uint32_t slot, const void* data, uint32_t size)
+    void Renderer::SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const
     {
-        SDL_PushGPUFragmentUniformData(m_cmdBuf, slot, data, size);
+        SDL_PushGPUFragmentUniformData(m_cmdBuf, (uint32_t)slot, data, size);
     }
 
     void Renderer::SetFragmentTexture(uint32_t slot, const Texture& texture)

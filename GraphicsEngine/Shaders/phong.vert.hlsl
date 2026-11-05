@@ -1,20 +1,20 @@
 #include "Lighting.hlsli"
+#include "Uniforms.hlsli"
 
-cbuffer VertexUniforms : register(b0, space1)
+cbuffer ObjectUniforms : register(OBJECT_SLOT, VERTEX_UNIFORM_SPACE)
 {
-    float4x4 mvp;
-    float4x4 model;
-    float3 camPos;
-    float padding1;
+    Object object;
 };
-cbuffer LightUniforms : register(b1, space1)
+cbuffer FrameUniforms : register(FRAME_SLOT, VERTEX_UNIFORM_SPACE)
 {
-    Light light[MAX_LIGHTS];
-    float3 ambient;
-    uint numLights;
+    Frame frame;
+};
+cbuffer LightUniforms : register(LIGHT_SLOT, VERTEX_UNIFORM_SPACE)
+{
+    Lights lights;
 };
 
-cbuffer MatUniforms : register(b2, space1)
+cbuffer MatUniforms : register(MATERIAL_SLOT, VERTEX_UNIFORM_SPACE)
 {
     Material material;
 };
@@ -38,10 +38,11 @@ Output main(Input input)
 {
     Output output;
     output.texcoord = (input.texcoord * material.tiling) + material.offset;
-    output.position = mul(mvp, float4(input.position, 1.0f));
+    output.worldPos = mul(object.model, float4(input.position, 1.0f)).xyz;
+  
+    output.position = mul(frame.viewProjection, float4(output.worldPos, 1.0f));
     
-    output.worldPos = mul(model, float4(input.position, 1.0f)).xyz;
-    output.normal = normalize(mul((float3x3) model, input.normal));
+    output.normal = normalize(mul((float3x3) object.normalMatrix, input.normal));
 
     return output;
 }

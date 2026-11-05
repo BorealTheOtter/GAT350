@@ -7,7 +7,7 @@
       "prototype": false,
       "transform": {
         "pos": [ 0, 0, 5 ],
-        "rot": [ 0.0, 180.0, 0.0 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "active": true,
@@ -20,7 +20,8 @@
         },
         {
           "type": "CameraController",
-          "speed": 3
+          "speed": 3,
+          "sensitivity": 0.2
         }
       ]
     }

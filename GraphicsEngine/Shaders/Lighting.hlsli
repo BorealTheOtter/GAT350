@@ -28,11 +28,16 @@ struct Light
     
     float4 color;
     
-    float3 ambient;
     float innerCutoff;
-    
     float outerCutoff;
-    float3 padding;
+    float2 padding;
+};
+
+struct Lights
+{
+    Light light[MAX_LIGHTS];
+    float3 ambient;
+    uint numLights;
 };
 
 float calculateAttenuation(float distance, float range)

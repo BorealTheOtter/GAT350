@@ -2,7 +2,9 @@
 #include "Framework/Scene.h"
 #include "Core/Factory.h"
 
-#include "Components/ColliderComponent.h"
+#include "Renderer/Renderer.h"
+#include "Components/CameraComponent.h"
+#include "Components/LightComponent.h"
 
 namespace sr {
 	
@@ -40,6 +42,36 @@ namespace sr {
 
 	void Scene::Draw(const Renderer& renderer)
 	{
+		FrameUniform fu{};
+
+		auto camera = GetActorByName<Actor>("Camera");
+		if (camera) {
+			auto cameraComponent = camera->GetComponent<CameraComponent>();
+			if (cameraComponent) {
+				fu.camPos = camera->GetTransform().pos;
+				fu.view = cameraComponent->GetView();
+				fu.projection = cameraComponent->GetProjection();
+				fu.viewProjection = fu.projection * fu.view;
+
+				renderer.SetVertexUniform(UniformSlot::Frame, &fu, sizeof(fu));
+				renderer.SetFragmentUniform(UniformSlot::Frame, &fu, sizeof(fu));
+			}
+		}
+
+		LightUniform lu{};
+
+		auto lights = GetActorsByTag("Lights");
+		for (auto light : lights) {
+			auto lightComponent = light->GetComponent<LightComponent>();
+			if (lightComponent)
+			{
+				//lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();
+			}
+		}
+
+		renderer.SetVertexUniform(UniformSlot::Light, &lu, sizeof(lu));
+		renderer.SetFragmentUniform(UniformSlot::Light, &lu, sizeof(lu));
+
 		for (auto& actor : m_actors)
 		{
 			actor->Draw(renderer);
@@ -79,25 +111,5 @@ namespace sr {
 			return false;
 		}
 		return true;
-	}
-
-
-	void Scene::UpdateCollisions()
-	{
-		for (auto& actorA : m_actors) {
-			for (auto& actorB : m_actors) {
-				if (actorA == actorB || actorA->m_destroyed || actorB->m_destroyed) continue;
-
-				auto colliderA = actorA->GetComponent<ColliderComponent>();
-				auto colliderB = actorB->GetComponent<ColliderComponent>();
-
-				if (!colliderA || !colliderB) continue;
-
-				if (colliderA->CheckCollision(*colliderB)) {
-					actorA->OnCollision(actorB.get());
-					actorB->OnCollision(actorA.get());
-				}
-			}
-		}
 	}
 }
