@@ -18,50 +18,8 @@
 using namespace sr;
 
 //UNIFORMS
-
-
-Light light1{
-    .pos {10, 10, 10},
-    .type {LightType::Directional},
-    .dir {-1,1,0},
-    .range{40},
-    .color {1.0, 0.85, 0.60, 0.8},
-    //.color {1.0, 0, 0, 0.8},
-    .innerCutoff{10},
-    .outerCutoff{15}
-};
-
-//Light light2{
-//    .pos {-10, 10, 5},
-//    .type {LightType::Point},
-//    .dir {1,1,0},
-//    .range{40},
-//    .color {0.0, 0.0, 1.0, 0.8},
-//    .innerCutoff{10},
-//    .outerCutoff{15}
-//};
-//
-//Light light3{
-//    .pos {-10, -10, 15},
-//    .type {LightType::Point},
-//    .dir {1,1,0},
-//    .range{40},
-//    .color {0.0, 1.0, 0.0, 0.8},
-//    .innerCutoff{10},
-//    .outerCutoff{15}
-//};
-
 ObjectUniform objectUniform;
 FrameUniform frameUniform;
-
-LightUniform lightUniform;
-
-MatUniform matUniform{
-    .color{1,1,1,1},
-    .tiling {1,1},
-    .offset {0,0},
-    .shine {64}
-};
 
 struct Color4 {
     float r, g, b, a;
@@ -77,12 +35,6 @@ Transform transform;
 int main()
 {
     SetWorkingDirectory("Assets");
-
-    lightUniform.lights[0] = light1;
-    //lightUniform.lights[1] = light2;
-    //lightUniform.lights[2] = light3;
-    lightUniform.numLights = 1;
-    lightUniform.ambient = glm::vec3(0.5, 0.425, 0.30);
 
     //INITIALIZE
     Engine::Get().Initialize();
@@ -137,31 +89,6 @@ int main()
 
         scene.Update(dt, Engine::Get().GetScreen().x, Engine::Get().GetScreen().y);
 
-
-
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_1)) {
-            lightUniform.lights[0].type = LightType::Directional;
-            lightUniform.lights[0].dir = { -1,1,0 };
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_2)) {
-            lightUniform.lights[0].type = LightType::Point;
-            lightUniform.lights[0].pos = glm::vec3(-3, 7, 2);
-        }
-        if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_3)) {
-            lightUniform.lights[0].type = LightType::Spot;
-            lightUniform.lights[0].pos = glm::vec3(0, 15, 0);
-            lightUniform.lights[0].dir = glm::vec3(0, 1, 0);
-            lightUniform.lights[0].innerCutoff = glm::cos(glm::radians(6.0));
-            lightUniform.lights[0].outerCutoff = glm::cos(glm::radians(5.0));
-        }
-
-        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_I)) lightUniform.lights[0].pos += glm::vec3{0,0.1,0};
-        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_K)) lightUniform.lights[0].pos -= glm::vec3{ 0,0.1,0 };
-        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_J)) lightUniform.lights[0].pos -= glm::vec3{0.1,0,0};
-        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_L)) lightUniform.lights[0].pos += glm::vec3{0.1,0,0 };
-        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_O)) lightUniform.lights[0].pos += glm::vec3{0,0,0.1};
-        //if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_U)) lightUniform.lights[0].pos -= glm::vec3{ 0,0,0.1 };
-
         //lightUniform.lights[0].pos = glm::eulerAngleY(time) * glm::vec4{ 0,0,10,1 };
         //lightUniform.lights[1].pos = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0,0,10,1 };
         //lightUniform.lights[2].pos = glm::eulerAngleZ(time * 0.3) * glm::vec4{ 0,0,10,1 };
@@ -176,32 +103,20 @@ int main()
         frameUniform.camPos = camera->GetTransform().pos;
 
         objectUniform.model = transform.GetMatrix();
-        vertexUniform.mvp = cameraComponent->GetProjection() * cameraComponent->GetView()* vertexUniform.model;
+        frameUniform.viewProjection = cameraComponent->GetProjection() * cameraComponent->GetView();
+
+        auto& renderer = Engine::Get().GetRenderer();
             
         //RENDER
-        Engine::Get().GetRenderer().BeginFrame();
+        renderer.BeginFrame();
 
-        Engine::Get().GetRenderer().SetPipeline(*pipeline);
+        renderer.SetPipeline(*pipeline);
 
-        //gouraud
-        //Engine::Get().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
-        //Engine::Get().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
-        //Engine::Get().GetRenderer().SetVertexUniform(2, &matUniform, sizeof(matUniform));
-        //Engine::Get().GetRenderer().SetFragmentUniform(0, &matUniform, sizeof(matUniform));
+        renderer.SetFragmentTexture(0, *texture1);
 
-        //phong
-        Engine::Get().GetRenderer().SetVertexUniform(UniformSlot::Object, &objectUniform, sizeof(objectUniform));
-        Engine::Get().GetRenderer().SetVertexUniform(UniformSlot::Material, &matUniform, sizeof(matUniform));
+        scene.Draw(renderer);
 
-        Engine::Get().GetRenderer().SetFragmentUniform(UniformSlot::Object, &objectUniform, sizeof(objectUniform));
-        Engine::Get().GetRenderer().SetFragmentUniform(UniformSlot::Material, &matUniform, sizeof(matUniform));
-
-
-        Engine::Get().GetRenderer().SetFragmentTexture(0, *texture1);
-
-        model->Draw(Engine::Get().GetRenderer());
-
-        Engine::Get().GetRenderer().EndFrame();
+        renderer.EndFrame();
         }
         //SHUTDOWN
     Engine::Get().Shutdown();

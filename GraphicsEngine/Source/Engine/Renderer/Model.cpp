@@ -29,14 +29,12 @@ namespace sr
 		return true;
 	}
 
-	void Model::Draw(Renderer& renderer) const
+	void Model::Draw(const Renderer& renderer) const
 	{
 		for (const auto& mesh : m_meshes)
 		{
 			renderer.SetVertexBuffer(*mesh.vertexBuffer);
-
 			renderer.SetIndexBuffer(*mesh.indexBuffer);
-
 			renderer.DrawIndex(*mesh.indexBuffer);
 		}
 	}

@@ -173,7 +173,7 @@ namespace sr
         SDL_DrawGPUPrimitives(m_renderPass, vertexCount, 1, 0, 0);
     }
 
-    void Renderer::DrawIndex(const IndexBuffer& indexBuffer)
+    void Renderer::DrawIndex(const IndexBuffer& indexBuffer) const
     {
         SDL_DrawGPUIndexedPrimitives(m_renderPass, indexBuffer.GetIndexCount(), 1, 0, 0, 0);
     }

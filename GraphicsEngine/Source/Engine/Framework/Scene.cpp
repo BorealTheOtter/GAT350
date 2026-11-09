@@ -59,16 +59,16 @@ namespace sr {
 		}
 
 		LightUniform lu{};
+		lu.ambient = glm::vec3{ 0.2 };
 
-		auto lights = GetActorsByTag("Lights");
+		auto lights = GetActorsByTag("Light");
 		for (auto light : lights) {
 			auto lightComponent = light->GetComponent<LightComponent>();
 			if (lightComponent)
 			{
-				//lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();
+				lu.lights[lu.numLights++] = lightComponent->GetLightData();
 			}
 		}
-
 		renderer.SetVertexUniform(UniformSlot::Light, &lu, sizeof(lu));
 		renderer.SetFragmentUniform(UniformSlot::Light, &lu, sizeof(lu));
 

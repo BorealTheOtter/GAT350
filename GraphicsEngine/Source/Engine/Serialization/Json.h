@@ -35,6 +35,7 @@ namespace sr::json
 
 
 	bool Read(const value_t& value, const std::string& name, std::vector<int>& data, bool req = false);
+	bool Read(const value_t& value, const std::string& name, std::vector<std::string>& data, bool req = false);
 	bool Read(const value_t& value, const std::string& name, float& data, bool req = false);
 	bool Read(const value_t& value, const std::string& name, bool& data, bool req = false);
 	bool Read(const value_t& value, const std::string& name, std::string& data, bool req = false);

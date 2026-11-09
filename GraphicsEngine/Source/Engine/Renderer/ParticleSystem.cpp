@@ -43,19 +43,19 @@ namespace sr {
 		}
 	}
 
-	void ParticleSystem::Draw(const Renderer& renderer)
-	{
-		// draw all active particlee
-		for (auto& particle : m_particles)
-		{
-			if (particle.active)
-			{
-				// set particle color and draw point at current position
-				renderer.SetColor(particle.color);
-				renderer.DrawPoint(particle.position.x, particle.position.y);
-			}
-		}
-	}
+	//void ParticleSystem::Draw(const Renderer& renderer)
+	//{
+	//	// draw all active particlee
+	//	for (auto& particle : m_particles)
+	//	{
+	//		if (particle.active)
+	//		{
+	//			// set particle color and draw point at current position
+	//			renderer.SetColor(particle.color);
+	//			renderer.DrawPoint(particle.position.x, particle.position.y);
+	//		}
+	//	}
+	//}
 
 	void ParticleSystem::AddParticle(const Particle& particle)
 	{

@@ -25,7 +25,7 @@ namespace sr
 			rot = glm::normalize(qr);
 		}
 
-		const glm::mat4& GetMatrix() {
+		const glm::mat4& GetMatrix() const {
 			auto mxt = glm::translate(pos);
 			auto mxr = glm::toMat4(rot);
 			auto mxs = glm::scale(glm::mat4{ 1.0f }, scale);

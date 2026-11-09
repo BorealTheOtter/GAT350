@@ -49,7 +49,7 @@ namespace sr
 		void CreateDepthBuffer();
 
 		void Draw(uint32_t vertexCount);
-		void DrawIndex(const class IndexBuffer& indexBuffer);
+		void DrawIndex(const class IndexBuffer& indexBuffer) const;
 
 		void SetVertexUniform(UniformSlot slot, const void* data, uint32_t size) const;
 		void SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const;
