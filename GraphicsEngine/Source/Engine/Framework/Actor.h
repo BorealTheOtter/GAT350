@@ -55,7 +55,7 @@ namespace sr
 		void SetTransform(const sr::Transform& transform) { m_transform = transform; }
 
 		void SetPosition(const glm::vec3 pos) { m_transform.pos = pos; }
-		void SetRotation(const glm::vec3 rotation) { m_transform.rot = rotation; }
+		void SetRotation(const glm::vec3 rotation) { m_transform.SetRotation(rotation); }
 		void SetScale(const glm::vec3 scale) { m_transform.scale = scale; }
 		
 		const std::string& GetName() const { return m_name; }

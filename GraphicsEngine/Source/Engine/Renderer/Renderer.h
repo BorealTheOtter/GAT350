@@ -4,7 +4,8 @@
 #include <SDL3_image/SDL_image.h>
 #include "Math/Transform.h"
 #include "Renderer/Model.h"
-#include "Math/Vector3.h"
+#include "Uniforms.h"
+#include "Light.h"
 
 
 namespace sr
@@ -36,25 +37,22 @@ namespace sr
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 
-		void SetCamera(const Vector2& camera) { m_camera = camera; }
-		void EnableCamera(bool active = true) { m_camActive = active; }
-
 		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
 		SDL_Window* GetWindow() const { return m_window; }
 
 		void SetPipeline(const class Pipeline& pipeline);
-		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
-		void SetIndexBuffer(const class IndexBuffer& indexBuffer);
+		void SetVertexBuffer(const class VertexBuffer& vertexBuffer) const;
+		void SetIndexBuffer(const class IndexBuffer& indexBuffer) const;
 
 		void SetFragmentTexture(uint32_t slot, const class Texture& texture);
 
 		void CreateDepthBuffer();
 
 		void Draw(uint32_t vertexCount);
-		void DrawIndex(const class IndexBuffer& indexBuffer);
+		void DrawIndex(const class IndexBuffer& indexBuffer) const;
 
-		void SetVertexUniform(uint32_t slot, const void* data, uint32_t size);
-		void SetFragmentUniform(uint32_t slot, const void* data, uint32_t size);
+		void SetVertexUniform(UniformSlot slot, const void* data, uint32_t size) const;
+		void SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const;
 
 	private:
 		friend class Text;
@@ -72,9 +70,6 @@ namespace sr
 		SDL_GPURenderPass* m_renderPass = nullptr;
 
 		SDL_GPUTexture* m_depthTexture = nullptr;
-
-		Vector2 m_camera;
-		bool m_camActive = true;
 
 		int m_width = 0;
 		int m_height = 0;

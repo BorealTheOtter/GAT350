@@ -1,5 +1,6 @@
 #pragma once
 #include "RendererComponent.h"
+#include "Resources/Resource.h"
 
 namespace sr
 {
@@ -13,5 +14,6 @@ namespace sr
 		virtual void Read(const json::value_t& value) override;
 
 	private:
+		res_t<class Model> m_model;
 	};
 }

@@ -14,9 +14,66 @@
       "components": [
         {
           "type": "CameraComponent",
-          "fov": 70.0,
+          "fov": 70,
           "nearPlane": 0.001,
           "farPlane": 300
+        },
+        {
+          "type": "CameraController",
+          "speed": 3,
+          "sensitivity": 0.2
+        }
+      ]
+    },
+    {
+      "name": "Light1",
+      "type": "Actor",
+      "tag": "Light",
+      "transform": {
+        "pos": [ 0, 0, 0 ],
+        "rot": [ -60.0, 30.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "light_type": "directional",
+          "color": [ 0.5, 0.5, 0.5, 1.0 ]
+        }
+      ]
+    },
+    {
+      "name": "Light2",
+      "type": "Actor",
+      "tag": "Light",
+      "transform": {
+        "pos": [ 5, 5, 0 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "light_type": "point",
+          "color": [ 1, 1, 1, 1 ],
+          "range": 40.0
+        }
+      ]
+    },
+    {
+      "name": "Mayu",
+      "type": "Actor",
+      "tag": "Mayu",
+      "transform": {
+        "pos": [ 0, 0, 0 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/Mayu.obj",
+          "materials": [ "Materials/Mayu.instance.json" ]
         }
       ]
     }
