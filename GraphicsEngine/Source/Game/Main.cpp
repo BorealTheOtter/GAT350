@@ -30,27 +30,9 @@ int main()
 
     Scene scene;
     scene.Load("Scenes/scene.json");
+    auto& renderer = Engine::Get().GetRenderer();
 
-    auto model = Resources().Get<Model>("Models/Mayu.obj", Engine::Get().GetRenderer());
-    auto texture1 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1001.png", Engine::Get().GetRenderer());
-    auto texture2 = Resources().Get<Texture>("Textures/Mayu/TORA_base_color_1002.png", Engine::Get().GetRenderer());
-
-    auto vshader = Resources().Get<sr::Shader>("shaders/phong.vert", Engine::Get().GetRenderer(), 4);
-    auto fshader = Resources().Get<sr::Shader>("shaders/phong.frag", Engine::Get().GetRenderer(), 4, 1);
-
-    auto pipeline = std::make_shared<Pipeline>();
-
-    pipeline->AddVertexBuffer(sizeof(Model::Vertex));
-    pipeline->AddVertexAttribute(0, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, position));
-    pipeline->AddVertexAttribute(1, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2, offsetof(Model::Vertex, texcoord));
-    pipeline->AddVertexAttribute(2, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, normal));
-    pipeline->AddVertexAttribute(3, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, tangent));
-
-    float scale = 0.5f;
-
-    pipeline->Create(*vshader.get(), *fshader.get(),
-        Engine::Get().GetRenderer().GetGPUDevice(),
-        Engine::Get().GetRenderer().GetWindow());
+   
 
     //MAIN LOOP
     bool quit = false;
@@ -74,14 +56,9 @@ int main()
         float time = Engine::Get().GetTime().GetTime();
 
         scene.Update(dt, Engine::Get().GetScreen().x, Engine::Get().GetScreen().y);
-
-        auto& renderer = Engine::Get().GetRenderer();
             
         //RENDER
         renderer.BeginFrame();
-
-        renderer.SetPipeline(*pipeline);
-        renderer.SetFragmentTexture(0, *texture1);
 
         scene.Draw(renderer);
 

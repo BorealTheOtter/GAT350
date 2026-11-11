@@ -7,6 +7,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "MaterialInstance.h"
+#include "Material.h"
 
 namespace sr
 {
@@ -150,7 +151,7 @@ namespace sr
         SDL_RenderDebugText(m_renderer, x, y, text);
     }
 
-    void Renderer::SetPipeline(const Pipeline& pipeline)
+    void Renderer::SetPipeline(const Pipeline& pipeline) const
     {
         SDL_BindGPUGraphicsPipeline(m_renderPass, pipeline.m_gpuPipeline);
     }
@@ -189,9 +190,10 @@ namespace sr
         SDL_PushGPUFragmentUniformData(m_cmdBuf, (uint32_t)slot, data, size);
     }
 
-    void Renderer::SetMaterial(const MaterialInscance& materialInstance) const
+    void Renderer::SetMaterial(const MaterialInstance& materialInstance) const
     {
-        
+        SetPipeline(materialInstance.GetMaterial().GetPipeline());
+        materialInstance.Bind(m_cmdBuf, m_renderPass);
     }
 
     void Renderer::SetFragmentTexture(uint32_t slot, const Texture& texture)

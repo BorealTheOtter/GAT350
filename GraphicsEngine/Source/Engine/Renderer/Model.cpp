@@ -135,9 +135,8 @@ namespace sr
 		newMesh.materialIndex = mesh->mMaterialIndex;
 		
 		m_meshes.push_back(std::move(newMesh));
-		// todo: add newMesh to m_meshes
-		// Mesh holds unique_ptrs so it can't be copied, use std::move(newMesh)
 	}
+
 	void Model::LoadMaterials(const aiScene* scene, const std::string& directory, const Renderer& renderer)
 	{
 		// every imported material starts from the standard phong material
