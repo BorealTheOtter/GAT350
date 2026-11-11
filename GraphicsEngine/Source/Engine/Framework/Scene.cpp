@@ -22,7 +22,7 @@ namespace sr {
 	{
 		for (auto& actor : m_actors)
 		{
-			actor->Update(dt, width, height);
+			if (actor && actor->IsActive()) { actor->Update(dt, width, height); }
 		}
 
 		for (auto& actor : m_actors)
@@ -42,6 +42,7 @@ namespace sr {
 
 	void Scene::Draw(const Renderer& renderer)
 	{
+		
 		FrameUniform fu{};
 
 		auto camera = GetActorByName<Actor>("Camera");
@@ -74,7 +75,7 @@ namespace sr {
 
 		for (auto& actor : m_actors)
 		{
-			actor->Draw(renderer);
+			if(actor && actor->IsActive()){ actor->Draw(renderer); }
 		}
 
 

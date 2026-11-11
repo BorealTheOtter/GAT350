@@ -87,7 +87,11 @@ namespace sr
 		for (const auto& texture : m_textures)
 		{
 			const Texture& source = texture ? *texture : *m_material->GetDefaultTexture();
-			bindings.push_back({ source.GetGPUTexture(), source.GetGPUSampler() });
+			SDL_GPUTextureSamplerBinding temp{
+				.texture = source.GetGPUTexture(),
+				.sampler = source.GetGPUSampler()
+			};
+			bindings.push_back(temp);
 		}
 
 		if (!bindings.empty())

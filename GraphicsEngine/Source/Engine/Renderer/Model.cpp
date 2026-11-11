@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Renderer.h"
 #include "Texture.h"
+#include "Core/File.h"
 #include "MaterialInstance.h"
 #include "Resources/ResourceManager.h"
 
@@ -30,6 +31,10 @@ namespace sr
 			return false;
 		}
 
+		// texture paths in the model are relative to the model file
+		std::string directory = GetParentDirectory(filename) + "/";
+		LoadMaterials(scene, directory, renderer);
+
 		ProcessNode(scene->mRootNode, scene, renderer);
 
 		return true;
@@ -43,6 +48,7 @@ namespace sr
 			uint32_t slot = mesh.materialIndex;
 			MaterialInstance material = (slot < overrides.size() && overrides[slot]) ? *overrides[slot] : m_materials[slot];
 
+			renderer.SetMaterial(material);
 			renderer.SetVertexBuffer(*mesh.vertexBuffer);
 			renderer.SetIndexBuffer(*mesh.indexBuffer);
 			renderer.DrawIndex(*mesh.indexBuffer);

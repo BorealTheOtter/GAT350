@@ -72,8 +72,7 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "Models/Mayu.obj",
-          "materials": [ "Materials/Mayu.instance.json" ]
+          "model": "Models/Mayu/Mayu.gltf"
         }
       ]
     }
