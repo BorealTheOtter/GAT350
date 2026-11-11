@@ -11,6 +11,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{94b24dc4-1087-4276-af1d-e27386c055b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Materials">
+      <UniqueIdentifier>{dcc23a35-dd50-4539-8c59-1ff1f5614733}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -20,6 +23,15 @@
   <ItemGroup>
     <None Include="..\..\Build\Assets\Scenes\scene.json">
       <Filter>Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\Mayu.instance.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\phong.material.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\Lava.instance.json">
+      <Filter>Materials</Filter>
     </None>
   </ItemGroup>
 </Project>

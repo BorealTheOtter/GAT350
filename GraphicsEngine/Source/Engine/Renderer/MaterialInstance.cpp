@@ -5,7 +5,7 @@
 #include "Serialization/Json.h"
 #include "Resources/ResourceManager.h"
 
-namespace nu
+namespace sr
 {
 	MaterialInstance::MaterialInstance(const res_t<Material> material)
 	{

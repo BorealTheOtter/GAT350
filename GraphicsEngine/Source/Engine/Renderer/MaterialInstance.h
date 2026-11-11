@@ -2,7 +2,7 @@
 #include "Resources/Resource.h"
 #include "Material.h"
 
-namespace nu
+namespace sr
 {
 	class Texture;
 

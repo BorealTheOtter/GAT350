@@ -4,7 +4,7 @@
 #include "Pipeline.h"
 #include <glm/glm.hpp>
 
-namespace nu
+namespace sr
 {
 	class Texture;
 

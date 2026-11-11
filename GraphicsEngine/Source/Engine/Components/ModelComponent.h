@@ -10,10 +10,10 @@ namespace sr
 		CLASS_PROTOTYPE(ModelComponent)
 
 		void Draw(const Renderer& renderer) override;
-
 		virtual void Read(const json::value_t& value) override;
 
 	private:
 		res_t<class Model> m_model;
+		std::vector<res_t<class MaterialInstance>> m_materials;
 	};
 }

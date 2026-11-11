@@ -15,7 +15,7 @@ namespace sr {
 		void ClearActors(bool force = false);
 
 		void Update(float dt, float width, float height);
-		void Draw(const class Renderer& renderer);
+		void Draw(const Renderer& renderer);
 
 		template<typename T>
 		T* GetActorByName(const std::string& name);

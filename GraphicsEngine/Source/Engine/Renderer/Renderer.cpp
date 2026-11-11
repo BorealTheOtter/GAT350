@@ -6,6 +6,7 @@
 #include "Pipeline.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "MaterialInstance.h"
 
 namespace sr
 {
@@ -186,6 +187,11 @@ namespace sr
     void Renderer::SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const
     {
         SDL_PushGPUFragmentUniformData(m_cmdBuf, (uint32_t)slot, data, size);
+    }
+
+    void Renderer::SetMaterial(const MaterialInscance& materialInstance) const
+    {
+        
     }
 
     void Renderer::SetFragmentTexture(uint32_t slot, const Texture& texture)

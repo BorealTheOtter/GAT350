@@ -7,7 +7,7 @@
 #include "Model.h"
 #include "Texture.h"
 
-namespace nu
+namespace sr
 {
 	bool Material::Load(const std::string& filename, const class Renderer& renderer)
 	{
@@ -46,12 +46,12 @@ namespace nu
 		std::string vertexShaderName;
 		JSON_READ_NAME(document, "vertex_shader", vertexShaderName);
 		if (!vertexShaderName.empty()) 
-			m_vertexShader = Resources().Get<nu::Shader>(vertexShaderName, renderer);
+			m_vertexShader = Resources().Get<sr::Shader>(vertexShaderName, renderer);
 
 		std::string fragmentShaderName;
 		JSON_READ_NAME(document, "fragment_shader", fragmentShaderName);
 		if (!fragmentShaderName.empty())
-			m_fragmentShader = Resources().Get<nu::Shader>(fragmentShaderName, renderer);
+			m_fragmentShader = Resources().Get<sr::Shader>(fragmentShaderName, renderer);
 
 		if (!m_vertexShader || !m_fragmentShader)
 		{

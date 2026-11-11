@@ -59,7 +59,7 @@ namespace sr {
 		}
 
 		LightUniform lu{};
-		lu.ambient = glm::vec3{ 0.2 };
+		lu.ambient = glm::vec3{ 0.2f };
 
 		auto lights = GetActorsByTag("Light");
 		for (auto light : lights) {

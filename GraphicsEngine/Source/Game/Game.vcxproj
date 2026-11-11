@@ -199,6 +199,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Build\Assets\Materials\Lava.instance.json" />
+    <None Include="..\..\Build\Assets\Materials\Mayu.instance.json" />
+    <None Include="..\..\Build\Assets\Materials\phong.material.json" />
     <None Include="..\..\Build\Assets\Scenes\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
