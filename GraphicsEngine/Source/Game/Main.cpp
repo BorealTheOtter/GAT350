@@ -29,7 +29,7 @@ int main()
     Engine::Get().Initialize();
 
     Scene scene;
-    scene.Load("Scenes/scene.json");
+    scene.Load("Scenes/scene2.json");
     auto& renderer = Engine::Get().GetRenderer();
 
    
@@ -41,6 +41,7 @@ int main()
         //UPDATE
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
+            Engine::Get().GetEditor().ProcessEvent(event);
             if (event.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
@@ -49,18 +50,24 @@ int main()
             }
         }
 
+        //ENGINE
         Engine::Get().Update();
-
-
         float dt = Engine::Get().GetTime().GetDeltaTime();
         float time = Engine::Get().GetTime().GetTime();
 
+        //SCENE
         scene.Update(dt, Engine::Get().GetScreen().x, Engine::Get().GetScreen().y);
             
+        //EDITOR
+        Engine::Get().GetEditor().BeginFrame();
+        Engine::Get().GetEditor().Update();
+
         //RENDER
         renderer.BeginFrame();
-
         scene.Draw(renderer);
+
+        renderer.EndRenderPass();
+        Engine::Get().GetEditor().Draw(renderer);
 
         renderer.EndFrame();
         }

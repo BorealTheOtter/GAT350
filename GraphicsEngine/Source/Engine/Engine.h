@@ -19,6 +19,7 @@
 #include "Resources/ResourceManager.h"
 #include "Serialization/Json.h"
 #include "Core/Factory.h"
+#include "Editor/Editor.h"
 
 #include "Framework/Game.h"
 
@@ -40,6 +41,7 @@ namespace sr {
 		Time& GetTime() { return m_time; }
 		Audio& GetAudio() { return m_audio; }
 		ParticleSystem& GetPS() { return m_particleSystem; }
+		Editor& GetEditor() { return m_editor; }
 
 		void SetScreen(const Vector2& v) { m_screen = v; }
 		const Vector2& GetScreen() const { return m_screen; }
@@ -54,6 +56,8 @@ namespace sr {
 		Renderer m_renderer;
 		Audio m_audio;
 		ParticleSystem m_particleSystem;
+		Editor m_editor;
+
 		Time m_time;
 		Vector2 m_screen{ 640,480 };
 

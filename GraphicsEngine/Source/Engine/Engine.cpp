@@ -11,6 +11,7 @@ namespace sr {
 		m_input.Initialize();
 		m_time.Reset();
 		m_audio.Initialize();
+		m_editor.Initialize(m_renderer);
 
 		return true;
 	}
@@ -19,6 +20,7 @@ namespace sr {
 		m_audio.Shutdown();
 		m_input.Shutdown();
 		m_particleSystem.Shutdown();
+		m_editor.Shutdown();
 		m_renderer.Quit();
 	}
 	void Engine::Update()

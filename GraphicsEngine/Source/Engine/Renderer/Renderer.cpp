@@ -101,18 +101,18 @@ namespace sr
         }
 
 
-        SDL_GPUTexture* swapchainTexture = nullptr;
-        if (!SDL_WaitAndAcquireGPUSwapchainTexture(m_cmdBuf, m_window, &swapchainTexture, nullptr, nullptr))
+        m_swapchainTexture = nullptr;
+        if (!SDL_WaitAndAcquireGPUSwapchainTexture(m_cmdBuf, m_window, &m_swapchainTexture, nullptr, nullptr))
         {
             std::cerr << "Could not acquire swapchain texture: " << SDL_GetError() << std::endl;
             return false;
         }
 
-        if (swapchainTexture != nullptr)
+        if (m_swapchainTexture != nullptr)
         {
             // configure the color target attachments (This handles clearing the screen)
             SDL_GPUColorTargetInfo color_target_info{};
-            color_target_info.texture = swapchainTexture;
+            color_target_info.texture = m_swapchainTexture;
             color_target_info.clear_color = SDL_FColor{ 0.2f, 0.2f, 0.2f, 1.0f };
             color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
             color_target_info.store_op = SDL_GPU_STOREOP_STORE;
@@ -133,9 +133,10 @@ namespace sr
         return true;
     }
 
-    bool Renderer::EndFrame() const
+    bool Renderer::EndFrame()
     {
-        SDL_EndGPURenderPass(m_renderPass);
+        EndRenderPass();
+
         if (!SDL_SubmitGPUCommandBuffer(m_cmdBuf))
         {
             std::cerr << "Could not submit command buffer: " << SDL_GetError() << std::endl;
@@ -144,6 +145,14 @@ namespace sr
         
 
         return true;
+    }
+
+    void Renderer::EndRenderPass()
+    {
+        if (m_renderPass) {
+            SDL_EndGPURenderPass(m_renderPass);
+            m_renderPass = nullptr;
+        }
     }
 
     void Renderer::DebugText(float x, float y, const char* text) const

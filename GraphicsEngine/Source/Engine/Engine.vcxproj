@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine;$(SolutionDir)ThirdParty\imgui\backends;$(SolutionDir)ThirdParty\imgui</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine;$(SolutionDir)ThirdParty\imgui\backends;$(SolutionDir)ThirdParty\imgui</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -147,7 +147,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine;$(SolutionDir)ThirdParty\imgui\backends;$(SolutionDir)ThirdParty\imgui</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -175,7 +175,7 @@
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\box2d\include;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)ThirdParty\SDL3\include;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\glm;$(SolutionDir)Source\Engine;$(SolutionDir)ThirdParty\imgui\backends;$(SolutionDir)ThirdParty\imgui</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -195,6 +195,48 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\imgui\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Components\CameraComponent.cpp" />
     <ClCompile Include="Components\CameraController.cpp" />
@@ -204,6 +246,7 @@
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Core\EngineTime.cpp" />
     <ClCompile Include="Core\File.cpp" />
+    <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Framework\Actor.cpp" />
     <ClCompile Include="Framework\Game.cpp" />
@@ -231,6 +274,15 @@
     <ClCompile Include="Serialization\Json.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ThirdParty\imgui\backends\imgui_impl_sdl3.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3_shaders.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\imconfig.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\imgui.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\ThirdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Components\CameraComponent.h" />
     <ClInclude Include="Components\CameraController.h" />
@@ -247,6 +299,7 @@
     <ClInclude Include="Core\Random.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\StringUtils.h" />
+    <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Framework\Actor.h" />

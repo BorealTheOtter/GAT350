@@ -20,7 +20,8 @@ namespace sr
 		void Present() const;
 
 		bool BeginFrame();
-		bool EndFrame() const;
+		bool EndFrame();
+		void EndRenderPass();
 
 		void SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255) const;
 		void SetColor(float r, float g, float b, float a = 1.0f) const;
@@ -39,6 +40,8 @@ namespace sr
 
 		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
 		SDL_Window* GetWindow() const { return m_window; }
+		SDL_GPUCommandBuffer* GetGPUCommandBuffer() const { return m_cmdBuf; }
+		SDL_GPUTexture* GetGPUSwapchainTexture() const { return m_swapchainTexture; }
 
 		void SetPipeline(const class Pipeline& pipeline) const;
 		void SetVertexBuffer(const class VertexBuffer& vertexBuffer) const;
@@ -74,6 +77,7 @@ namespace sr
 		SDL_GPURenderPass* m_renderPass = nullptr;
 
 		SDL_GPUTexture* m_depthTexture = nullptr;
+		SDL_GPUTexture* m_swapchainTexture = nullptr;
 
 		int m_width = 0;
 		int m_height = 0;

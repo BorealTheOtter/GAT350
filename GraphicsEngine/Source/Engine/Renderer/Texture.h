@@ -19,7 +19,7 @@ namespace sr
 
 		glm::vec2 GetSize() const { return { m_width, m_height }; }
 
-		SDL_GPUTexture* GetGPUTexture()  const{ return m_gpuTexture; }
+		SDL_GPUTexture* GetGPUTexture() const { return m_gpuTexture; }
 		SDL_GPUSampler* GetGPUSampler() const { return m_gpuSampler; }
 
 		friend class Renderer;

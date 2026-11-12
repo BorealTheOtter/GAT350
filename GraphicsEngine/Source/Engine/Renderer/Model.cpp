@@ -94,14 +94,24 @@ namespace sr
 
 			// todo: set vertex.normal from mesh->mNormals[i] (x, y, z)
 			// normals are optional, use (0, 0, 0) if mesh->mNormals is null (see texcoord above)
-				vertex.normal.x = mesh->mNormals[i].x;
-				vertex.normal.y = mesh->mNormals[i].y;
-				vertex.normal.z = mesh->mNormals[i].z;
+				if (mesh->mNormals) {
+					vertex.normal.x = mesh->mNormals[i].x;
+					vertex.normal.y = mesh->mNormals[i].y;
+					vertex.normal.z = mesh->mNormals[i].z;
+				}
+				else {
+					vertex.normal = { 0,0,0 };
+				}
 			// todo: set vertex.tangent from mesh->mTangents[i] (x, y, z)
 			// tangents are optional, use (0, 0, 0) if mesh->mTangents is null (see texcoord above)
-				vertex.tangent.x = mesh->mTangents[i].x;
-				vertex.tangent.y = mesh->mTangents[i].y;
-				vertex.tangent.z = mesh->mTangents[i].z;
+				if (mesh->mTangents) {
+					vertex.tangent.x = mesh->mTangents[i].x;
+					vertex.tangent.y = mesh->mTangents[i].y;
+					vertex.tangent.z = mesh->mTangents[i].z;
+				}
+				else {
+					vertex.tangent = { 0,0,0 };
+				}
 
 			vertices.push_back(vertex);
 		}

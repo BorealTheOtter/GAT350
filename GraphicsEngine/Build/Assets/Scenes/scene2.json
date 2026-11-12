@@ -1,0 +1,276 @@
+{
+  "actors": [
+    {
+      "name": "Camera",
+      "type": "Actor",
+      "tag": "Camera",
+      "prototype": false,
+      "transform": {
+        "pos": [ 9, 3, 0 ],
+        "rot": [ 0.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "active": true,
+      "components": [
+        {
+          "type": "CameraComponent",
+          "fov": 70,
+          "nearPlane": 0.001,
+          "farPlane": 300
+        },
+        {
+          "type": "CameraController",
+          "speed": 15,
+          "sensitivity": 0.2
+        }
+      ]
+    },
+    {
+      "name": "Light1",
+      "type": "Actor",
+      "tag": "Light",
+      "transform": {
+        "pos": [ 9.05445159, 3.6290888, 1.33584047 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "light_type": "Point",
+          "color": [ 1.0, 0.90196, 0.80784, 0.634 ],
+          "range": 200.0
+        }
+      ]
+    },
+    {
+      "name": "Light2",
+      "type": "Actor",
+      "tag": "Light",
+      "transform": {
+        "pos": [ 5.92151876, 3.45582516, 6.39269361 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "light_type": "Point",
+          "color": [ 0.92549, 0.94509, 1, 0.730 ],
+          "range": 200.0
+        }
+      ]
+    },
+    {
+      "name": "Wall_1",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 11.50311895, 1.85010134, 1.47176738 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.281197, 3.922674, 6.712376 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj",
+          "materials": [ "Materials/Lava.instance.json" ]
+        }
+      ]
+    },
+    {
+      "name": "Wall_2",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 6.13553806, 1.85010134, 1.47176738 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.281197, 3.922674, 6.712376 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj",
+          "materials": [ "Materials/Lava.instance.json" ]
+        }
+      ]
+    },
+    {
+      "name": "Wall_3",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 8.83750447, 1.84606599, -1.75055446 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 5.257996, 3.922674, 0.281197 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj",
+          "materials": [ "Materials/Lava.instance.json" ]
+        }
+      ]
+    },
+    {
+      "name": "Wall_4",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 10.9013751, 1.92997418, 4.68822101 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.922532, 3.791669, 0.281197 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Wall_5",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 7.74797378, 1.92997418, 4.68822101 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 2.925793, 3.764115, 0.281197 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Wall_6",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 9.83498792, 3.14931006, 4.68822101 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.264391, 1.320051, 0.281197 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Roof",
+      "type": "Actor",
+      "tag": "Roof",
+      "transform": {
+        "pos": [ 8.04248559, 3.85652093, 2.96497922 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 7.155609, 0.1, 9.208526 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Floor",
+      "type": "Actor",
+      "tag": "Floor",
+      "transform": {
+        "pos": [ 8.51870353, 0.0, 3.06312911 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 10.0, 0.1, 10.0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Tunnel_1",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 11.53552918, 1.94200146, 4.43956273 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.281197, 3.922674, 6.712376 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Tunnel_2",
+      "type": "Actor",
+      "tag": "Wall",
+      "transform": {
+        "pos": [ 8.00359389, 1.94200156, 7.656634 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 6.757374, 3.922674, 0.281197 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Bench_1",
+      "type": "Actor",
+      "tag": "Bench",
+      "transform": {
+        "pos": [ 6.5724443, 0.81976041, 1.46290731 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.595863, 0.1, 6.224088 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Bench_2",
+      "type": "Actor",
+      "tag": "Bench",
+      "transform": {
+        "pos": [ 8.82587344, 0.81976039, -1.33933303 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 4.058452, 0.1, 0.595863 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    },
+    {
+      "name": "Bench_3",
+      "type": "Actor",
+      "tag": "Bench",
+      "transform": {
+        "pos": [ 11.09082874, 0.81976052, 0.71032536 ],
+        "rot": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.595863, 0.1, 4.693401 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "Models/cube.obj"
+        }
+      ]
+    }
+  ]
+}

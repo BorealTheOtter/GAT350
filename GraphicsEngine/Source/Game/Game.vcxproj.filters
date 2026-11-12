@@ -36,5 +36,11 @@
     <None Include="..\..\Build\Assets\Models\Mayu\Mayu.gltf">
       <Filter>Scenes</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Models\flight-helmet\FlightHelmet.gltf">
+      <Filter>Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene2.json">
+      <Filter>Scenes</Filter>
+    </None>
   </ItemGroup>
 </Project>

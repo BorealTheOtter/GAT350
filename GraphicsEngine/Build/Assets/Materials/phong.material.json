@@ -1,7 +1,7 @@
 {
 	"type": "material",
-	"vertex_shader": "shaders/phong.vert",
-	"fragment_shader": "shaders/phong.frag",
+	"vertex_shader": "Shaders/phong.vert",
+	"fragment_shader": "Shaders/phong.frag",
 	"textures": [ "base_map" ],
 	"base_color": [ 1.0, 1.0, 1.0, 1.0 ],
 	"specular_color": [ 1.0, 1.0, 1.0 ],
