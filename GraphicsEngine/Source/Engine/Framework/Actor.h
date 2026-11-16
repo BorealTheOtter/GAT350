@@ -20,7 +20,7 @@ namespace sr
 
 	struct ActorDesc 
 	{
-		Transform transform{ glm::vec3{0.0}, glm::vec3{0.0}, glm::vec3{1.0} };
+		Transform transform;
 		res_t<Model> model;
 		res_t<Texture> texture;
 		std::string name;
@@ -71,6 +71,8 @@ namespace sr
 		bool GetDestroyed() const { return m_destroyed; }
 
 		bool GetPersistent() const { return m_persistent; }
+
+		void UpdateGui() override;
 
 		virtual void Read(const json::value_t& value) override;
 

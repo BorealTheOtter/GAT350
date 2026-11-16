@@ -4,11 +4,12 @@
 #include <memory>
 
 #include "Framework/Actor.h"
+#include "Editor/Editor.h"
 
 
 namespace sr {
 	
-	class Scene {
+	class Scene : public IGUI{
 	public:
 		void AddActor(std::unique_ptr<Actor> actor);
 
@@ -16,6 +17,8 @@ namespace sr {
 
 		void Update(float dt, float width, float height);
 		void Draw(const Renderer& renderer);
+
+		void UpdateGui() override;
 
 		template<typename T>
 		T* GetActorByName(const std::string& name);
@@ -26,6 +29,8 @@ namespace sr {
 		template<typename T = Actor>
 		std::vector<T*> GetActorsByTag(const std::string& tag);
 
+		const auto& GetActors() const { return m_actors; }
+		
 		void SetGame(class Game* game) { m_game = game; }
 		class Game* GetGame() { return m_game; }
 
@@ -38,6 +43,7 @@ namespace sr {
 		std::vector<std::unique_ptr<Actor>> m_pendingActors;
 
 		class Game* m_game = nullptr;
+		glm::vec3 m_ambient{ 0.2f };
 
 	};
 	

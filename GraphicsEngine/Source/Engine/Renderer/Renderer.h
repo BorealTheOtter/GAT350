@@ -60,6 +60,9 @@ namespace sr
 		void SetFragmentTexture(uint32_t slot, const class Texture& texture) const;
 		void SetMaterial(const class MaterialInstance& matInstance) const;
 
+		void SetClearColor(glm::vec3 clearColor) { m_clearColor = clearColor; }
+		glm::vec3 GetClearColor() { return m_clearColor; }
+
 	private:
 		friend class Text;
 		friend class Texture;
@@ -81,6 +84,8 @@ namespace sr
 
 		int m_width = 0;
 		int m_height = 0;
+
+		glm::vec3 m_clearColor{ 0 };
 	};
 }
 

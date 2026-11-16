@@ -69,13 +69,38 @@ namespace sr
 		}
 
 	}
-	//float Actor::GetRadius() const
-	//{
-	//		if(m_model) return m_model.get()->GetRadius() * m_transform.scale * 0.6f;
-	//		if (m_texture) return (m_texture->GetSize().Length() * 0.5f) * 0.6f;
 
-	//		return 0.0f;
-	//}
+	void Actor::UpdateGui()
+	{
+		ImGui::Checkbox("##Active", &m_active);
+		ImGui::SameLine();
+
+		Object::UpdateGui();
+
+		ImGui::Text("Tag: %s", m_tag.c_str());
+		ImGui::Separator();
+		if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
+			m_transform.UpdateGui();
+		}
+
+		// components information
+		for (auto& component : m_components)
+		{
+			ImGui::PushID(component.get());
+			ImGui::Separator();
+
+			bool active = component->IsActive();
+			if (ImGui::Checkbox("##active", &active)) component->SetActive(active);
+			ImGui::SameLine();
+
+			if (ImGui::CollapsingHeader(component->GetClassName(), ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				component->UpdateGui();
+			}
+			ImGui::PopID();
+		}
+	}
+
 	void Actor::Read(const json::value_t& value)
 	{
 		Object::Read(value);

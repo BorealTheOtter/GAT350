@@ -29,7 +29,7 @@ int main()
     Engine::Get().Initialize();
 
     Scene scene;
-    scene.Load("Scenes/scene2.json");
+    scene.Load("Scenes/scene.json");
     auto& renderer = Engine::Get().GetRenderer();
 
    
@@ -60,7 +60,7 @@ int main()
             
         //EDITOR
         Engine::Get().GetEditor().BeginFrame();
-        Engine::Get().GetEditor().Update();
+        Engine::Get().GetEditor().Update(scene);
 
         //RENDER
         renderer.BeginFrame();

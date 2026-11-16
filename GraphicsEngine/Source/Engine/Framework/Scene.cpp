@@ -6,6 +6,8 @@
 #include "Components/CameraComponent.h"
 #include "Components/LightComponent.h"
 
+#include "Engine.h"
+
 namespace sr {
 	
 	void Scene::AddActor(std::unique_ptr<Actor> actor) {
@@ -60,12 +62,13 @@ namespace sr {
 		}
 
 		LightUniform lu{};
-		lu.ambient = glm::vec3{ 0.2f };
+		lu.ambient = m_ambient;
 
 		auto lights = GetActorsByTag("Light");
 		for (auto light : lights) {
+			if (!light->IsActive()) continue;
 			auto lightComponent = light->GetComponent<LightComponent>();
-			if (lightComponent)
+			if (lightComponent && lightComponent->IsActive())
 			{
 				lu.lights[lu.numLights++] = lightComponent->GetLightData();
 			}
@@ -80,6 +83,15 @@ namespace sr {
 
 
 	}
+
+	void Scene::UpdateGui()
+	{
+		glm::vec3 clearColor = Engine::Get().GetRenderer().GetClearColor();
+		ImGui::ColorEdit3("Clear Color", glm::value_ptr(clearColor));
+		Engine::Get().GetRenderer().SetClearColor(clearColor);
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(m_ambient));
+	}
+
 	bool Scene::Load(const std::string sceneName)
 	{
 		sr::json::document_t document;
