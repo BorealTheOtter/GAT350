@@ -15,6 +15,8 @@ namespace sr
 
 		Light GetLightData() const;
 
+		void UpdateGui() override;
+
 	private:
 		LightType m_type;
 		float m_range;

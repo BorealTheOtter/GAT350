@@ -31,7 +31,7 @@ namespace sr {
 
         m_owner->SetRotation(glm::vec3(m_pitch, m_yaw, 0.0f));
 
-        glm::vec3 direction{ 0 };
+        glm::vec3 direction{ 0.0f };
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction -= m_speed * m_owner->GetTransform().Right();
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction += m_speed * m_owner->GetTransform().Right();
         if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_E)) direction += m_speed * m_owner->GetTransform().Up();
@@ -50,5 +50,10 @@ namespace sr {
         Component::Read(value);
         JSON_READ_NAME(value, "speed", m_speed);
         JSON_READ_NAME(value, "sensitivity", m_sens);
+    }
+    void CameraController::UpdateGui()
+    {
+        ImGui::SliderFloat("Speed", &m_speed, 0.1f, 15.0f);
+        ImGui::SliderFloat("Sensitivity", &m_sens, 0.1f, 1.0f);
     }
 }

@@ -38,4 +38,16 @@ namespace sr
 		};
 		return ld;
 	}
+	void LightComponent::UpdateGui()
+	{
+		const char* types[] = {"Directional","Point","Spot"};
+		ImGui::Combo("Type", (int*)(&m_type), types,3);
+		ImGui::ColorEdit4("Light Color + Intensity", glm::value_ptr(m_color));
+
+		if (m_type != LightType::Directional) ImGui::SliderFloat("Range", &m_range, 0.0f, 100.0f);
+		if (m_type == LightType::Spot) {
+			ImGui::SliderFloat("Inner Cutoff", &m_innerCutoff, 0.0f, 100.0f);
+			ImGui::SliderFloat("Outer Cutoff", &m_outerCutoff, 0.0f, 100.0f);
+		}
+	}
 }

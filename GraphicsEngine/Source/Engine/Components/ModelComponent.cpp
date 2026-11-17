@@ -25,7 +25,7 @@ namespace sr
 		renderer.SetVertexUniform(UniformSlot::Object, &ou, sizeof(ou));
 		renderer.SetFragmentUniform(UniformSlot::Object, &ou, sizeof(ou));
 
-		m_model->Draw(renderer);
+		m_model->Draw(renderer, m_materials);
 	}
 
 	void ModelComponent::Read(const json::value_t & value)

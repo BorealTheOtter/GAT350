@@ -11,11 +11,13 @@ namespace sr {
 
 		void Read(const json::value_t& value) override;
 
-	private:
-		float m_speed{ 1 };
-		float m_sens{ 1 };
+		void UpdateGui() override;
 
-		float m_yaw{ 0 };
-		float m_pitch{ 0 };
+	private:
+		float m_speed{ 1.0f };
+		float m_sens{ 1.0f };
+
+		float m_yaw{ 0.0f };
+		float m_pitch{ 0.0f };
 	};
 }

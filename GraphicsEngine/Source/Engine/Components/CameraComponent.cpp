@@ -33,4 +33,10 @@ namespace sr
 		JSON_READ(value, nearPlane);
 		JSON_READ(value, farPlane);
 	}
+	void CameraComponent::UpdateGui()
+	{
+		ImGui::SliderFloat("FOV", &fov, 0.1f, 179.0f);
+		ImGui::DragFloat("Near Plane", &nearPlane, 0.1f);
+		ImGui::DragFloat("Far Plane", &farPlane, 0.1f);
+	}
 }

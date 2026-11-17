@@ -199,8 +199,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Build\Assets\Materials\Ground.instance.json" />
     <None Include="..\..\Build\Assets\Materials\Lava.instance.json" />
     <None Include="..\..\Build\Assets\Materials\Mayu.instance.json" />
+    <None Include="..\..\Build\Assets\Materials\multi.material.json" />
     <None Include="..\..\Build\Assets\Materials\phong.material.json" />
     <None Include="..\..\Build\Assets\Models\flight-helmet\FlightHelmet.gltf" />
     <None Include="..\..\Build\Assets\Models\Mayu\Mayu.gltf" />

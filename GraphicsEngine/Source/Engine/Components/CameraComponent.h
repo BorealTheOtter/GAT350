@@ -17,6 +17,8 @@ namespace sr
 		const glm::mat4x4& GetView() const { return m_view; }
 		const glm::mat4x4& GetProjection() const { return m_projection; }
 
+		void UpdateGui() override;
+
 	public:
 		float aspectRatio{(16.0f / 9.0f)};
 		float fov{ 70.0f };
