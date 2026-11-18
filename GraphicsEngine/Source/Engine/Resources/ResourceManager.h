@@ -22,6 +22,8 @@ namespace sr
 			requires std::derived_from<T, Resource>
 		res_t<T> GetWithID(const std::string& id, const std::string& name, Args&& ... args);
 
+		const auto& GetAll() const { return m_resources; }
+
 	private:
 		friend class Singleton<ResourceManager>;
 		ResourceManager() = default;
@@ -69,6 +71,7 @@ namespace sr
 		}
 
 		// add resource to resource manager
+		resource->SetName(id);
 		m_resources[id] = resource;
 
 		return resource;

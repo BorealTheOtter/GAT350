@@ -25,6 +25,8 @@ namespace sr
 
 		const Material& GetMaterial() const { return *m_material; }
 
+		void UpdateGui() override;
+
 	private:
 		res_t<Material> m_material;
 		MaterialData m_data;
