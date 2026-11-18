@@ -19,7 +19,16 @@ namespace sr
 		// the format must match the window's swapchain texture format
 		std::array colorTargetDescriptions{
 			SDL_GPUColorTargetDescription{
-				.format = SDL_GetGPUSwapchainTextureFormat(m_gpuDevice, window)
+				.format = SDL_GetGPUSwapchainTextureFormat(m_gpuDevice, window),
+				.blend_state = SDL_GPUColorTargetBlendState{
+					.src_color_blendfactor = SDL_GPU_BLENDFACTOR_SRC_ALPHA,
+					.dst_color_blendfactor = SDL_GPU_BLENDFACTOR_ONE_MINUS_SRC_ALPHA,
+					.color_blend_op = SDL_GPU_BLENDOP_ADD,
+					.src_alpha_blendfactor = SDL_GPU_BLENDFACTOR_ONE,
+					.dst_alpha_blendfactor = SDL_GPU_BLENDFACTOR_ZERO,
+					.alpha_blend_op = SDL_GPU_BLENDOP_ADD,
+					.enable_blend = true
+				}
 			}
 		};
 

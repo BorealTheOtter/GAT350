@@ -4,6 +4,7 @@
 	"tiling": [ 1, 1 ],
 	"textures": {
 		"base1_map": "Textures/rock.png",
-		"base2_map": "Textures/grass.png"
+		"base2_map": "Textures/grass.png",
+		"base3_map": "Textures/lava_emissive.png"
 	}
 }

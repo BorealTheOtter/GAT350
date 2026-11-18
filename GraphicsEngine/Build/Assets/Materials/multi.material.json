@@ -2,7 +2,7 @@
 	"type": "material",
 	"vertex_shader": "Shaders/phong.vert",
 	"fragment_shader": "Shaders/multi.frag",
-	"textures": [ "base1_map", "base2_map" ],
+	"textures": [ "base1_map", "base2_map", "base3_map" ],
 	"base_color": [ 1.0, 1.0, 1.0, 1.0 ],
 	"specular_color": [ 1.0, 1.0, 1.0 ],
 	"shininess": 32.0,
