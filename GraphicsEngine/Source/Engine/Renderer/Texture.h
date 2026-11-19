@@ -24,6 +24,8 @@ namespace sr
 
 		friend class Renderer;
 
+		void UpdateGui() override;
+
 	private:
 		uint32_t m_width{ 0 };
 		uint32_t m_height{ 0 };
