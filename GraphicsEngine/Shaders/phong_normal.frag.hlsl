@@ -35,6 +35,7 @@ struct Input
     float2 texcoord : TEXCOORD0;
     float3 worldPos : TEXCOORD1;
     float3 normal : TEXCOORD2;
+    float3 tangent : TEXCOORD3;
 };
 
 struct Output
@@ -51,13 +52,22 @@ Output main(Input input)
     float3 emissive = emissive_texture.Sample(emissive_sampler, input.texcoord).rgb * material.emissiveColor;
     
     float4 albedo = base_texture.Sample(base_sampler, input.texcoord) * material.color;
+    
+    float3 normal = normal_texture.Sample(normal_sampler, input.texcoord).rgb * 2.0 - 1.0;
+    float3 nNormal = normalize(input.normal);
+    float3 T = normalize(input.tangent);
+    float3 B = cross(nNormal, T);
+    float3x3 TBN = float3x3(T, B, nNormal);
+    float3 N = normalize(mul(normal, TBN));
+    
+    
     float3 diffuse = lights.ambient;
     float3 specular = 0;
     
     float3 V = normalize(frame.camPos - input.worldPos);
     for (uint i = 0; i < lights.numLights; i++)
     {
-        calculateLighting(lights.light[i], material, input.worldPos, normalize(input.normal), V, diffuse, specular);
+        calculateLighting(lights.light[i], material, input.worldPos, N, V, diffuse, specular);
     };
 
     

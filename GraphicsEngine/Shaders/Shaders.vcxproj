@@ -115,6 +115,7 @@
     <FxCompile Include="unlit.vert.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Build\Assets\Textures\Skybox\skybox.cubemap.json" />
     <None Include="Lighting.hlsli" />
     <None Include="Uniforms.hlsli" />
   </ItemGroup>

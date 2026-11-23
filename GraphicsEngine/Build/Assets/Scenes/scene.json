@@ -61,9 +61,9 @@
       ]
     },
     {
-      "name": "Mayu",
+      "name": "Ogre",
       "type": "Actor",
-      "tag": "Mayu",
+      "tag": "Ogre",
       "transform": {
         "pos": [ 0, 0, 0 ],
         "rot": [ 0.0, 0.0, 0.0 ],
@@ -72,8 +72,9 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "Models/sphere.obj",
-          "materials": [ "Materials/Lava.instance.json" ]
+          "model": "Models/ogre.obj",
+          "materials": [
+            "Materials/Ogre.normal.instance.json" ]
         }
       ]
     }

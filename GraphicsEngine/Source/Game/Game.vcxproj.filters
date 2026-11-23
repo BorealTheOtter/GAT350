@@ -48,5 +48,14 @@
     <None Include="..\..\Build\Assets\Materials\Ground.instance.json">
       <Filter>Materials</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Materials\phong.normal.material.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\Lava.normal.instance.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\Ogre.normal.instance.json">
+      <Filter>Materials</Filter>
+    </None>
   </ItemGroup>
 </Project>

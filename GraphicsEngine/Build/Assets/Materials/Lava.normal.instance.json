@@ -1,0 +1,11 @@
+{
+	"type": "material_instance",
+	"material": "Materials/phong.normal.material.json",
+	"tiling": [ 1, 1 ],
+	"textures": {
+		"base_map": "Textures/lava_diffuse.png",
+		"specular_map":	"Textures/lava_specular.png",
+		"emissive_map":	"Textures/lava_emissive.png",
+		"normal_map":	"Textures/lava_normal.png"
+	}
+}
