@@ -84,4 +84,17 @@ namespace sr
 		auto it = std::find(m_textureSlots.begin(), m_textureSlots.end(), name);
 		return (it != m_textureSlots.end()) ? (int)std::distance(m_textureSlots.begin(), it) : -1;
 	}
+
+	void Material::UpdateGui()
+	{
+		ImGui::Text("Vertex Shader: %s", m_vertexShader->GetName().c_str());
+		ImGui::Text("Fragment Shader: %s", m_fragmentShader->GetName().c_str());
+
+		ImGui::TextColored({ 0,1,0,1 }, "Texture Slots");
+		ImGui::Separator();
+		for (size_t i = 0; i < m_textureSlots.size(); i++)
+		{
+			ImGui::Text("TextureSlot [%d] - %s", i, m_textureSlots[i].c_str());
+		}
+	}
 }

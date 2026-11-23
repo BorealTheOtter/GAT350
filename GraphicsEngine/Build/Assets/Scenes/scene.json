@@ -72,7 +72,8 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "Models/Mayu/Mayu.gltf"
+          "model": "Models/sphere.obj",
+          "materials": [ "Materials/Lava.instance.json" ]
         }
       ]
     }

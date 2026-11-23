@@ -35,6 +35,8 @@ namespace sr
 		const Pipeline& GetPipeline() const { return m_pipeline; }
 		const res_t<Texture>& GetDefaultTexture() const { return m_defaultTexture; }
 
+		void UpdateGui() override;
+
 	private:
 		res_t<Shader> m_vertexShader;
 		res_t<Shader> m_fragmentShader;
