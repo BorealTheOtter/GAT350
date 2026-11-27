@@ -33,7 +33,9 @@ namespace sr
 		int GetTextureSlot(const std::string& name) const;
 
 		const Pipeline& GetPipeline() const { return m_pipeline; }
-		const res_t<Texture>& GetDefaultTexture() const { return m_defaultTexture; }
+
+		const res_t<Texture>& GetDefaultTexture(size_t slot) const { return m_defaultTextures.at(slot); }
+		const std::vector<res_t<Texture>>& GetDefaultTextures() const { return m_defaultTextures; }
 
 		void UpdateGui() override;
 
@@ -44,6 +46,6 @@ namespace sr
 
 		MaterialData m_defaults;
 		std::vector<std::string> m_textureSlots;
-		res_t<Texture> m_defaultTexture;
+		std::vector<res_t<Texture>> m_defaultTextures;
 	};
 }

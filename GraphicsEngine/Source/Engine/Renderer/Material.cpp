@@ -40,11 +40,18 @@ namespace sr
 		// texture slots in sampler order, slot 0 = register(t0, space2)
 		JSON_READ_NAME(document, "textures", m_textureSlots);
 
-		m_defaultTexture = Resources().Get<Texture>("textures/default.png", renderer);
-		if (!m_defaultTexture)
-		{
-			std::cerr << "Could not load default texture for Material: " << filename << std::endl;
-			return false;
+		for (const auto& textureSlot : m_textureSlots) {
+			auto texture = (textureSlot == "normal_map") 
+				? Resources().Get<Texture>("Textures/default.normal.png", renderer) 
+				: Resources().Get<Texture>("Textures/default.png", renderer);
+
+			if (!texture)
+			{
+				std::cerr << "Could not load default texture for Material: " << filename << std::endl;
+				return false;
+			}
+
+			m_defaultTextures.push_back(texture);
 		}
 
 		// shaders

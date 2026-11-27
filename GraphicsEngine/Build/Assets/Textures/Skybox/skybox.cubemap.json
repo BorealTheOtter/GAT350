@@ -1,10 +1,10 @@
 {
-	"faces":{
-		"right":"Textures/Skybox/posx.jpg",
-		"left":"Textures/Skybox/negx.jpg",
-		"top":"Textures/Skybox/posy.jpg",
-		"bottom":"Textures/Skybox/negy.jpg",
-		"front":"Textures/Skybox/posz.jpg",
-		"back":"Textures/Skybox/negz.jpg"
-	}
+	"faces": [
+		"Textures/Skybox/posx.jpg",
+		"Textures/Skybox/negx.jpg",
+		"Textures/Skybox/posy.jpg",
+		"Textures/Skybox/negy.jpg",
+		"Textures/Skybox/posz.jpg",
+		"Textures/Skybox/negz.jpg"
+	]
 }

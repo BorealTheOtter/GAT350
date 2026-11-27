@@ -48,14 +48,26 @@
     <None Include="..\..\Build\Assets\Materials\Ground.instance.json">
       <Filter>Materials</Filter>
     </None>
-    <None Include="..\..\Build\Assets\Materials\phong.normal.material.json">
-      <Filter>Materials</Filter>
-    </None>
     <None Include="..\..\Build\Assets\Materials\Lava.normal.instance.json">
       <Filter>Materials</Filter>
     </None>
     <None Include="..\..\Build\Assets\Materials\Ogre.normal.instance.json">
       <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\phong_default.material.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\phong_normal.material.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\Skybox.instance.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\skybox.material.json">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene-skybox.json">
+      <Filter>Scenes</Filter>
     </None>
   </ItemGroup>
 </Project>
